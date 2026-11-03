@@ -1,0 +1,727 @@
+:root {
+  --bg-dark: #07050c;
+  --cabinet-border: #2a233d;
+  --neon-pink: #ff2a85;
+  --neon-gold: #ffd12a;
+  --neon-cyan: #00f0ff;
+  --neon-green: #2eff7b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+html, body {
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+  background-color: var(--bg-dark);
+  font-family: "Courier New", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", monospace, sans-serif;
+  color: #fff;
+  touch-action: none;
+}
+
+#arcade-cabinet {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  margin: 0;
+  background: #050408;
+  border: none;
+}
+
+#screen-container {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  overflow: hidden;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+#game-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: fill;
+  image-rendering: auto;
+  filter: contrast(1.05) saturate(1.12);
+}
+
+.crt-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      rgba(18, 16, 16, 0) 50%,
+      rgba(0, 0, 0, 0.14) 50%
+    ),
+    radial-gradient(
+      circle at center,
+      transparent 82%,
+      rgba(0, 0, 0, 0.42) 100%
+    );
+  background-size: 100% 3px, 100% 100%;
+  z-index: 4;
+}
+
+/* 選車車庫與結算覆蓋層 (偏上方對齊，露出下方背景即時動態車尾預覽！) */
+.overlay-screen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(6, 5, 16, 0.88) 0%, rgba(6, 5, 16, 0.45) 75%, rgba(6, 5, 16, 0.15) 100%);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 10px 14px;
+  z-index: 10;
+  overflow-y: auto;
+}
+
+.overlay-screen.hidden {
+  display: none;
+}
+
+.overlay-card {
+  max-width: 620px;
+  width: 100%;
+  background: linear-gradient(180deg, rgba(24, 15, 46, 0.94) 0%, rgba(12, 8, 24, 0.92) 100%);
+  border: 2px solid var(--neon-gold);
+  border-radius: 12px;
+  padding: 12px 16px;
+  text-align: center;
+  box-shadow: 0 0 28px rgba(255, 42, 133, 0.45);
+}
+
+.pixel-badge {
+  display: inline-block;
+  background: var(--neon-pink);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 9px;
+  border-radius: 99px;
+  margin-bottom: 4px;
+}
+
+#overlay-title {
+  font-size: 26px;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: 2px;
+  color: #fff;
+  text-shadow: 0 0 10px var(--neon-pink), 2px 2px 0 #000;
+}
+
+#overlay-title span {
+  color: var(--neon-gold);
+}
+
+.subtitle-tw {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--neon-cyan);
+  margin-bottom: 8px;
+}
+
+/* 6 大載具選擇格 */
+.vehicle-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px;
+  margin-bottom: 8px;
+}
+
+.vehicle-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 2px solid rgba(255, 255, 255, 0.22);
+  border-radius: 8px;
+  padding: 6px 6px;
+  cursor: pointer;
+  text-align: left;
+  transition: transform 0.08s, border-color 0.08s, background 0.08s;
+}
+
+.vehicle-card:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.vehicle-card.selected {
+  background: rgba(255, 209, 42, 0.18);
+  border-color: var(--neon-gold);
+  box-shadow: 0 0 12px rgba(255, 209, 42, 0.45);
+  transform: translateY(-1px);
+}
+
+.vcard-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.vcard-preview {
+  width: 52px;
+  height: 36px;
+  flex-shrink: 0;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  image-rendering: pixelated;
+}
+
+.vcard-info {
+  min-width: 0;
+  flex: 1;
+}
+
+.vcard-title {
+  font-size: 11.5px;
+  font-weight: 900;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vcard-tag {
+  font-size: 9.5px;
+  color: var(--neon-cyan);
+  font-weight: 700;
+  margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vcard-stats {
+  font-size: 9.5px;
+  color: var(--neon-gold);
+  margin-top: 2px;
+}
+
+/* 選中載具介紹框 */
+.vehicle-detail-box {
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px dashed rgba(255, 209, 42, 0.55);
+  border-radius: 8px;
+  padding: 7px 10px;
+  text-align: left;
+  margin-bottom: 9px;
+}
+
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3px;
+}
+
+.detail-name {
+  font-size: 14px;
+  font-weight: 900;
+  color: var(--neon-gold);
+}
+
+.detail-plate {
+  background: #fff;
+  color: #111;
+  font-size: 10px;
+  font-weight: 900;
+  padding: 1px 6px;
+  border-radius: 3px;
+  border: 1px solid #000;
+}
+
+.detail-desc {
+  font-size: 11.5px;
+  color: #eee;
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+.detail-nitro {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--neon-cyan);
+}
+
+.detail-crash {
+  font-size: 11px;
+  font-weight: 800;
+  color: #ff7675;
+  margin-top: 2px;
+}
+
+.arcade-start-btn {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 16px;
+  font-weight: 900;
+  color: #111;
+  background: linear-gradient(180deg, #ffe45e 0%, #ff9900 100%);
+  border: 2px solid #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 3px 0 #995200, 0 0 14px rgba(255, 209, 42, 0.75);
+}
+
+.arcade-start-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #995200;
+}
+
+.controls-hint {
+  margin-top: 6px;
+  font-size: 10.5px;
+  color: #ccc;
+}
+
+/* 底部控制區：跨裝置懸浮半透明街機控制列，讓全螢幕風景視野放到最大！ */
+#touch-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px max(14px, env(safe-area-inset-right)) max(6px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
+  background: linear-gradient(180deg, rgba(20, 15, 34, 0.88) 0%, rgba(10, 8, 18, 0.96) 100%);
+  border-top: 2px solid rgba(255, 209, 42, 0.45);
+  gap: 8px;
+  flex-shrink: 0;
+  z-index: 14;
+}
+
+.dpad-group,
+.action-group {
+  display: flex;
+  gap: 10px;
+}
+
+.ctrl-btn {
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+  font-weight: 900;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.75);
+  transition: transform 0.05s, filter 0.05s;
+}
+
+.ctrl-btn span {
+  font-size: 10px;
+  opacity: 0.85;
+  margin-top: 2px;
+}
+
+.ctrl-btn:active,
+.ctrl-btn.active {
+  transform: translateY(3px);
+  filter: brightness(1.25);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.75);
+}
+
+.dir-btn {
+  width: 82px;
+  height: 58px;
+  font-size: 22px;
+  background: linear-gradient(180deg, #3c486b 0%, #232a40 100%);
+}
+
+.brake-btn {
+  width: 92px;
+  height: 58px;
+  font-size: 15px;
+  background: linear-gradient(180deg, #d9384a 0%, #871928 100%);
+}
+
+.nitro-btn {
+  width: 118px;
+  height: 58px;
+  font-size: 15px;
+  background: linear-gradient(180deg, #ff9900 0%, #c43c00 100%);
+  border-color: var(--neon-gold);
+}
+
+.center-console {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.auto-gas-indicator {
+  font-size: 11px;
+  font-weight: 900;
+  color: var(--neon-green);
+  background: rgba(46, 255, 123, 0.12);
+  border: 1px solid rgba(46, 255, 123, 0.45);
+  padding: 2px 10px;
+  border-radius: 99px;
+}
+
+.mini-btn-row {
+  display: flex;
+  gap: 6px;
+}
+
+.mini-btn {
+  background: #2b2340;
+  color: #ddd;
+  border: 1px solid #594a7a;
+  border-radius: 6px;
+  padding: 4px 9px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mini-btn:hover {
+  background: #3d315b;
+}
+
+/* ==================== 終點全景浮動工具列與通關結算面板 ==================== */
+.victory-floating-bar {
+  position: absolute;
+  top: 42px;
+  right: 12px;
+  display: flex;
+  gap: 8px;
+  z-index: 12;
+}
+
+.victory-floating-bar.hidden {
+  display: none;
+}
+
+.vfloat-btn {
+  background: rgba(16, 12, 32, 0.88);
+  color: #fff;
+  border: 2px solid var(--neon-cyan);
+  border-radius: 8px;
+  padding: 6px 11px;
+  font-size: 11.5px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.65);
+}
+
+.vfloat-btn.primary {
+  background: linear-gradient(180deg, #ffe45e 0%, #ff9900 100%);
+  color: #111;
+  border-color: #fff;
+}
+
+.vfloat-btn:hover {
+  filter: brightness(1.15);
+}
+
+.victory-card {
+  max-width: 680px;
+  padding: 10px 14px;
+}
+
+.victory-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.peek-panorama-btn {
+  background: rgba(0, 240, 255, 0.16);
+  color: var(--neon-cyan);
+  border: 1.5px solid var(--neon-cyan);
+  border-radius: 6px;
+  padding: 3px 9px;
+  font-size: 11px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.peek-panorama-btn:hover {
+  background: rgba(0, 240, 255, 0.28);
+}
+
+.victory-title {
+  font-size: 20px;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 7px;
+  text-shadow: 0 0 8px var(--neon-pink), 2px 2px 0 #000;
+}
+
+.victory-title span {
+  color: var(--neon-gold);
+}
+
+.victory-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.vstat-box {
+  background: rgba(0, 0, 0, 0.58);
+  border: 1px solid rgba(255, 209, 42, 0.45);
+  border-radius: 8px;
+  padding: 7px 10px;
+  text-align: left;
+}
+
+.vstat-header {
+  font-size: 12px;
+  font-weight: 900;
+  color: var(--neon-gold);
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.22);
+  padding-bottom: 3px;
+  margin-bottom: 4px;
+}
+
+.vstat-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #ddd;
+  margin-bottom: 2px;
+}
+
+.vstat-line.total {
+  margin-top: 4px;
+  padding-top: 3px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 12px;
+  color: var(--neon-green);
+}
+
+.v-food-list {
+  margin-top: 4px;
+  font-size: 10px;
+  color: #ffeaa7;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 10 關景點回顧畫廊 */
+.scenic-review-section {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 240, 255, 0.35);
+  border-radius: 8px;
+  padding: 6px 8px;
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+.scenic-review-title {
+  font-size: 11.5px;
+  font-weight: 900;
+  color: var(--neon-cyan);
+  margin-bottom: 5px;
+}
+
+.scenic-review-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+}
+
+.scenic-review-item {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  padding: 4px;
+  text-align: center;
+}
+
+.scenic-review-item.is-finale {
+  border-color: var(--neon-gold);
+  background: rgba(255, 209, 42, 0.14);
+}
+
+.sreview-canvas {
+  width: 100%;
+  height: 36px;
+  border-radius: 4px;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.sreview-step {
+  font-size: 9px;
+  font-weight: 800;
+  color: var(--neon-gold);
+}
+
+.sreview-name {
+  font-size: 10px;
+  font-weight: 900;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sreview-sub {
+  font-size: 8.5px;
+  color: #aaa;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.victory-btn-row {
+  display: flex;
+  gap: 8px;
+}
+
+.arcade-secondary-btn {
+  flex: 0.75;
+  padding: 9px 10px;
+  font-size: 13px;
+  font-weight: 900;
+  color: #fff;
+  background: linear-gradient(180deg, #0984e3 0%, #0652dd 100%);
+  border: 2px solid var(--neon-cyan);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* 完整路線圖覆蓋層 */
+.route-map-card {
+  max-width: 780px;
+  max-height: 92%;
+  display: flex;
+  flex-direction: column;
+}
+
+.route-map-content {
+  overflow-y: auto;
+  text-align: left;
+  padding-right: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rmap-tier {
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 209, 42, 0.4);
+  border-radius: 8px;
+  padding: 7px 9px;
+}
+
+.rmap-tier-title {
+  font-size: 12.5px;
+  font-weight: 900;
+  color: var(--neon-gold);
+  margin-bottom: 6px;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+  padding-bottom: 3px;
+}
+
+.rmap-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.rmap-node {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 6px;
+  padding: 5px;
+}
+
+.rmap-node-head {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 3px;
+}
+
+.rmap-thumb {
+  width: 48px;
+  height: 24px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.rmap-node-title {
+  font-size: 10.5px;
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.rmap-node-region {
+  font-size: 9px;
+  color: var(--neon-cyan);
+}
+
+.rmap-subspots {
+  font-size: 9px;
+  color: #ddd;
+  line-height: 1.35;
+}
+
+@media (max-width: 900px) {
+  .mini-btn-row {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .mini-btn {
+    padding: 3px 7px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 640px) {
+  .vehicle-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .victory-stats-grid {
+    grid-template-columns: 1fr;
+  }
+  .scenic-review-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .rmap-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .auto-gas-indicator {
+    display: none;
+  }
+  .dir-btn {
+    width: 60px;
+    height: 48px;
+    font-size: 17px;
+  }
+  .brake-btn {
+    width: 64px;
+    height: 48px;
+    font-size: 11.5px;
+  }
+  .nitro-btn {
+    width: 82px;
+    height: 48px;
+    font-size: 11.5px;
+  }
+}

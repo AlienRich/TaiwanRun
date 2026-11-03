@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <title>TaiwanOutRun 台灣瘋狂大賽車 (全螢幕滿版 ‧ 15關5分鐘環島 ‧ 38中途景點 ‧ 5大天氣光影 ‧ 8大終點全景)</title>
+  <link rel="stylesheet" href="css/arcade.css?v=5.4" />
+</head>
+<body>
+  <div id="arcade-cabinet">
+    <main id="screen-container">
+      <canvas id="game-canvas" width="720" height="400"></canvas>
+      <div class="crt-overlay"></div>
+
+      <!-- 終點全景欣賞模式下的浮動工具列（不遮擋終點風景與 1/4 車子） -->
+      <div id="victory-floating-bar" class="victory-floating-bar hidden">
+        <button id="btn-show-victory-modal" class="vfloat-btn primary">📊 查看【計算分數 ‧ 卡路里 ‧ 景點回顧】</button>
+        <button id="btn-next-finale-preview" class="vfloat-btn">🔄 切換8大終點風景</button>
+        <button id="btn-victory-restart-float" class="vfloat-btn">🚀 再次環島出發</button>
+      </div>
+
+      <!-- 通關結算：計算分數、卡路里統計、10關景點回顧覆蓋層 -->
+      <div id="victory-screen" class="overlay-screen hidden">
+        <div class="overlay-card victory-card">
+          <div class="victory-top-row">
+            <span class="pixel-badge">GOAL IN! ‧ 環島15關通關結算 ‧ 分數 ‧ 卡路里 ‧ 景點回顧</span>
+            <button id="btn-hide-victory-modal" class="peek-panorama-btn">🏞️ 欣賞終點全景（車佔1/4＋兩旁歡呼）</button>
+          </div>
+          <h2 id="victory-title" class="victory-title">🏆 環島終點制霸：<span>彰化鹿港天后宮</span></h2>
+
+          <!-- 分數計算與卡路里雙欄統計表 -->
+          <div class="victory-stats-grid">
+            <div class="vstat-box score-box">
+              <div class="vstat-header">💰 通關分數計算明細</div>
+              <div class="vstat-line"><span>賽道與美食得分：</span><b id="v-base-score">0</b></div>
+              <div class="vstat-line"><span>剩餘時間獎勵：</span><b id="v-time-bonus">+0</b></div>
+              <div class="vstat-line"><span>環島完賽大獎：</span><b id="v-clear-bonus">+50,000</b></div>
+              <div class="vstat-line total"><span>最終總分 (TOTAL)：</span><b id="v-total-score">0</b></div>
+            </div>
+
+            <div class="vstat-box calorie-box">
+              <div class="vstat-header">🍔 環島卡路里與美食統計</div>
+              <div class="vstat-line"><span>沿途吃下美食：</span><b id="v-food-count">0 份</b></div>
+              <div class="vstat-line"><span>累計攝取熱量：</span><b id="v-cal-intake">0 kcal</b></div>
+              <div class="vstat-line"><span>推車燃脂消耗：</span><b id="v-cal-burned">0 kcal</b></div>
+              <div class="vstat-line total"><span>車手體態評價：</span><b id="v-body-rank">精實破風車神</b></div>
+              <div id="v-food-list" class="v-food-list">尚未品嚐夜市小吃</div>
+            </div>
+          </div>
+
+          <!-- 15 關環島景點回顧畫廊（含每個景點的像素插畫預覽與沿途小景點介紹） -->
+          <div class="scenic-review-section">
+            <div class="scenic-review-title">🗺️ 本趟環島 15 關景點回顧（起點富岡車站 ➔ 13個由南至北途經景點 ➔ 終點）</div>
+            <div id="scenic-review-grid" class="scenic-review-grid"></div>
+          </div>
+
+          <div class="victory-btn-row">
+            <button id="btn-admire-finale" class="arcade-secondary-btn">🏞️ 隱藏視窗・看終點全景＆歡呼</button>
+            <button id="btn-victory-restart" class="arcade-start-btn">INSERT COIN ‧ 挑戰下一趟隨機環島路線！</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 全台 47 關完整路線圖總覽覆蓋層（1起點 ➔ 38隨機途經景點 ➔ 8大終點） -->
+      <div id="route-map-screen" class="overlay-screen hidden">
+        <div class="overlay-card route-map-card">
+          <div class="victory-top-row">
+            <span class="pixel-badge">TAIWAN OUTRUN ‧ 全台環島完整路線圖（共47關卡 ‧ 282處沿途小景點 ‧ 5大天氣光影）</span>
+            <button id="btn-close-route-map" class="peek-panorama-btn">✖ 關閉路線圖</button>
+          </div>
+          <h2 class="victory-title">🗺️ 台灣瘋狂大賽車 <span>完整環島路線圖</span></h2>
+          <div class="subtitle-tw">【第1關：富岡火車站 (20秒)】➔【第2~14關：38大景點由南至北13關 (各20秒)】➔【第15關：8大終點 (20秒) ＝ 全程 5 分鐘】</div>
+          <div id="route-map-content" class="route-map-content"></div>
+        </div>
+      </div>
+
+      <!-- 開場選車車庫與 TIME OVER 覆蓋層 -->
+      <div id="overlay-screen" class="overlay-screen">
+        <div class="overlay-card">
+          <div class="pixel-badge">MILESTONE 5.1 ‧ 富岡火車站起點 ‧ 沿途牌樓小吃山海景 ‧ 8大終點全景結算</div>
+          <h1 id="overlay-title">TAIWAN <span>OUTRUN</span></h1>
+          <div id="overlay-subtitle" class="subtitle-tw">從【桃園富岡火車站】衝出！沿途欣賞牌樓、小吃攤、山景海景，直奔8大終點全景！</div>
+
+          <!-- 6 大載具選擇格 -->
+          <div id="vehicle-grid" class="vehicle-grid"></div>
+
+          <!-- 當前選中載具詳細規格與必殺技介紹 -->
+          <div id="vehicle-detail-box" class="vehicle-detail-box">
+            <div id="detail-header" class="detail-header">
+              <span id="detail-name" class="detail-name">香腸/臭豆腐三輪車</span>
+              <span id="detail-plate" class="detail-plate">十八仔-666</span>
+            </div>
+            <p id="detail-desc" class="detail-desc"></p>
+            <div id="detail-nitro" class="detail-nitro"></div>
+            <div id="detail-crash" class="detail-crash"></div>
+          </div>
+
+          <button id="btn-start" class="arcade-start-btn">INSERT COIN ‧ 從富岡火車站出發！</button>
+          <div class="controls-hint">
+            🚗 <b>自動加速</b> ｜ <b>← →</b> 左右過彎與選路 ｜ <b>↓</b> 煞車 ｜ <b>空白鍵 Space</b> 必殺噴射 / 變胖時推車減肥
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- 手機與電腦通用街機控制列 -->
+    <footer id="touch-controls">
+      <div class="dpad-group">
+        <button id="btn-left" class="ctrl-btn dir-btn" aria-label="左轉">◀<span>LEFT</span></button>
+        <button id="btn-right" class="ctrl-btn dir-btn" aria-label="右轉">▶<span>RIGHT</span></button>
+      </div>
+
+      <div class="center-console">
+        <div class="auto-gas-indicator">⚡ AUTO-GAS 自動加速中</div>
+        <div class="mini-btn-row">
+          <button id="btn-fullscreen" class="mini-btn">⛶ 全螢幕放大</button>
+          <button id="btn-garage" class="mini-btn">🚘 換車車庫</button>
+          <button id="btn-route-map" class="mini-btn">🗺️ 完整路線圖</button>
+          <button id="btn-fat-test" class="mini-btn">🍔 變胖推車預覽</button>
+          <button id="btn-crash-test" class="mini-btn">💥 翻車重組預覽</button>
+          <button id="btn-finale-test" class="mini-btn">🏁 終點全景＆結算</button>
+          <button id="btn-sound" class="mini-btn">🔊 音樂/音效: 開</button>
+        </div>
+      </div>
+
+      <div class="action-group">
+        <button id="btn-brake" class="ctrl-btn brake-btn">⬇ 煞車<span>BRAKE (↓)</span></button>
+        <button id="btn-nitro" class="ctrl-btn nitro-btn">🔥 必殺噴射<span>NITRO (SPACE)</span></button>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/audio.js?v=6.0"></script>
+  <script src="js/stages_data.js?v=6.0"></script>
+  <script src="js/vehicle_sprites_data.js?v=6.0"></script>
+  <script src="js/sprites.js?v=6.0"></script>
+  <script src="js/road.js?v=6.0"></script>
+  <script src="js/player.js?v=6.0"></script>
+  <script src="js/collision.js?v=6.0"></script>
+  <script src="js/main.js?v=6.0"></script>
+</body>
+</html>
