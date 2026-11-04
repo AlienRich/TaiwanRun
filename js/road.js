@@ -293,7 +293,8 @@ class Pseudo3DRoad {
       const stageId = this.currentStage.id;
       const isMountain = region === '山區' || stageId === 'taroko' || stageId === 'end_taroko' ||
         stageId === 'jiufen' || stageId === 'taipingshan' || stageId === 'longteng' ||
-        stageId === 'yangmingshan' || stageId === 'alishan' || stageId === 'hehuanshan';
+        stageId === 'yangmingshan' || stageId === 'alishan' || stageId === 'end_alishan' ||
+        stageId === 'meishan' || stageId === 'hehuanshan';
 
       if (stageId === 'taroko' || stageId === 'end_taroko') {
         // 【太魯閣國家公園・中橫峽谷：高高低低峭壁起伏、九曲迴腸左拐右彎髮夾彎】
@@ -1132,6 +1133,94 @@ class Pseudo3DRoad {
       const surf1 = beach1 + w1 * 0.10;
       const surf2 = beach2 + w2 * 0.10;
       this.drawPolygon(ctx, beach1, y1, surf1, y1, surf2, y2, beach2, y2, isLight ? '#ffffff' : '#7ed6df');
+      return;
+    }
+
+    if (theme === 'yunshanshui_cypress') {
+      // 【花蓮壽豐 雲山水夢幻湖】左側翠綠草坪與落羽松森林；右側蒂芬妮藍清澈湖水與跳石水圳
+      ctx.fillStyle = isLight ? '#2ed573' : '#26af61';
+      ctx.fillRect(0, y2, Math.max(0, leftEdge1), sliceH);
+      // 落羽松金黃與翠綠林帶
+      const cypress1 = leftEdge1 - w1 * 0.22;
+      const cypress2 = leftEdge2 - w2 * 0.22;
+      this.drawPolygon(ctx, Math.max(0, cypress1), y1, leftEdge1, y1, leftEdge2, y2, Math.max(0, cypress2), y2, isLight ? '#f39c12' : '#27ae60');
+
+      // 右側蒂芬妮藍夢幻湖水
+      const lakeWater = isLight ? '#00d2d3' : '#00cec9';
+      ctx.fillStyle = lakeWater;
+      ctx.fillRect(Math.max(0, rightEdge2), y2, width - Math.max(0, rightEdge2), sliceH);
+      // 湖岸白色石砌護欄與跳石步道
+      const weir1 = rightEdge1 + w1 * 0.16;
+      const weir2 = rightEdge2 + w2 * 0.16;
+      this.drawPolygon(ctx, rightEdge1, y1, weir1, y1, weir2, y2, rightEdge2, y2, isLight ? '#ffffff' : '#dfe6e9');
+      return;
+    }
+
+    if (theme === 'meishan_tea') {
+      // 【嘉義梅山 太平雲梯】左側高山梯田翠綠茶園步道；右側深谷雲海與高空吊橋白色纜索
+      ctx.fillStyle = isLight ? '#2ecc71' : '#27ae60';
+      ctx.fillRect(0, y2, Math.max(0, leftEdge1), sliceH);
+      // 階梯狀茶園深淺相間茶樹波浪
+      const teaLedge1 = leftEdge1 - w1 * 0.24;
+      const teaLedge2 = leftEdge2 - w2 * 0.24;
+      this.drawPolygon(ctx, Math.max(0, teaLedge1), y1, leftEdge1, y1, leftEdge2, y2, Math.max(0, teaLedge2), y2, isLight ? '#1e8449' : '#145a32');
+
+      // 右側俯瞰嘉南平原萬丈深谷與翻騰雲海
+      ctx.fillStyle = isLight ? '#f9ca24' : '#e67e22';
+      ctx.fillRect(Math.max(0, rightEdge2), y2, width - Math.max(0, rightEdge2), sliceH);
+      const cloud1 = rightEdge1 + w1 * 0.18;
+      const cloud2 = rightEdge2 + w2 * 0.18;
+      this.drawPolygon(ctx, rightEdge1, y1, cloud1, y1, cloud2, y2, rightEdge2, y2, isLight ? '#ffffff' : '#f5f6fa');
+      return;
+    }
+
+    if (theme === 'jialulan_coast') {
+      // 【台東卑南 加路蘭海岸】左側綠色大草原與椰子樹；右側浩瀚太平洋湛藍海浪與拍岸白浪花
+      ctx.fillStyle = isLight ? '#00b894' : '#00947a';
+      ctx.fillRect(0, y2, Math.max(0, leftEdge1), sliceH);
+
+      const seaColor = isLight ? '#0984e3' : '#0052a5';
+      ctx.fillStyle = seaColor;
+      ctx.fillRect(Math.max(0, rightEdge2), y2, width - Math.max(0, rightEdge2), sliceH);
+      // 沿岸火山礁岩與白浪花
+      const surfShift = Math.sin(performance.now() * 0.007 + segment.index * 0.5) * (w1 * 0.05);
+      const reef1 = rightEdge1 + w1 * 0.14;
+      const reef2 = rightEdge2 + w2 * 0.14;
+      this.drawPolygon(ctx, rightEdge1, y1, reef1, y1, reef2, y2, rightEdge2, y2, isLight ? '#2d3436' : '#1e272e');
+      this.drawPolygon(ctx, reef1, y1, reef1 + w1 * 0.12 + surfShift, y1, reef2 + w2 * 0.12 + surfShift, y2, reef2, y2, '#ffffff');
+      return;
+    }
+
+    if (theme === 'nanwan_sand') {
+      // 【屏東墾丁 南灣遊憩區】左側熱帶椰林與金黃沙丘；右側金黃細沙海灘、彩色陽傘與碧藍海浪
+      ctx.fillStyle = isLight ? '#f1c40f' : '#e67e22';
+      ctx.fillRect(0, y2, Math.max(0, leftEdge1), sliceH);
+
+      const bayWater = isLight ? '#00a8ff' : '#0097e6';
+      ctx.fillStyle = bayWater;
+      ctx.fillRect(Math.max(0, rightEdge2), y2, width - Math.max(0, rightEdge2), sliceH);
+      const sand1 = rightEdge1 + w1 * 0.24;
+      const sand2 = rightEdge2 + w2 * 0.24;
+      this.drawPolygon(ctx, rightEdge1, y1, sand1, y1, sand2, y2, rightEdge2, y2, isLight ? '#f6e58d' : '#f1c40f');
+      const whiteSurf1 = sand1 + w1 * 0.10;
+      const whiteSurf2 = sand2 + w2 * 0.10;
+      this.drawPolygon(ctx, sand1, y1, whiteSurf1, y1, whiteSurf2, y2, sand2, y2, isLight ? '#ffffff' : '#7ed6df');
+      return;
+    }
+
+    if (theme === 'anping_brick') {
+      // 【台南安平 古堡與億載金城】左側1624荷蘭熱蘭遮城三層紅磚城基與古榕；右側台江運河石岸與古砲護欄
+      ctx.fillStyle = isLight ? '#c0392b' : '#962d22';
+      ctx.fillRect(0, y2, Math.max(0, leftEdge1), sliceH);
+      const brickLedge1 = leftEdge1 - w1 * 0.25;
+      const brickLedge2 = leftEdge2 - w2 * 0.25;
+      this.drawPolygon(ctx, Math.max(0, brickLedge1), y1, leftEdge1, y1, leftEdge2, y2, Math.max(0, brickLedge2), y2, isLight ? '#a04000' : '#784212');
+
+      ctx.fillStyle = isLight ? '#1abc9c' : '#16a085';
+      ctx.fillRect(Math.max(0, rightEdge2), y2, width - Math.max(0, rightEdge2), sliceH);
+      const stone1 = rightEdge1 + w1 * 0.16;
+      const stone2 = rightEdge2 + w2 * 0.16;
+      this.drawPolygon(ctx, rightEdge1, y1, stone1, y1, stone2, y2, rightEdge2, y2, isLight ? '#ecf0f1' : '#bdc3c7');
       return;
     }
 

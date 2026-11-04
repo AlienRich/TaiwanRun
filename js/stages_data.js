@@ -356,61 +356,61 @@ const SCENIC_STAGES_LIST = [
     obstacleType: 'CYPRESS_TREE'
   },
   {
-    id: 'alishan',
+    id: 'meishan',
     region: '山區',
-    spotName: '阿里山森林遊樂區',
-    name: '山區 ‧ 阿里山森林遊樂區',
-    category: '巨木雲海（自然）',
-    sceneryDesc: '破曉金光穿透雲海、晚霞映紅山巔、巨木遮蔽天日的原始靜謐氛圍。',
-    architectureDesc: '阿里山森林火車站、祝山觀景台、受鎮宮、木造高空神木棧道。',
-    geologyDesc: '阿里山山脈褶皺造山帶、千年紅檜巨木林生態、山間階地盆地。',
+    spotName: '梅山太平雲梯',
+    name: '山區 ‧ 嘉義梅山 太平雲梯',
+    category: '高山雲海吊橋（人文地景）',
+    sceneryDesc: '海拔千米全台最高單跨吊橋、俯瞰嘉南平原萬家燈火、漫步穿梭於雲海霧氣與階梯狀高山茶園。',
+    architectureDesc: '太平雲梯高山單跨吊橋（長281公尺）、望風亭觀景台、太平老街復古紅磚聚落、茶園木棧步道。',
+    geologyDesc: '阿里山山脈西緣斷層陡崖、梅山三十六彎險峻盤山公路地貌、日落雲海湧聚帶。',
     timeLimit: 60,
-    skyTop: '#183d3d',
-    skyMid: '#5c8374',
-    skyBottom: '#f3d7ca',
-    sunColor: '#ffd369',
-    mountainFar: '#1f441e',
-    mountainColor: '#142d14',
-    grassLight: '#1e5128',
-    grassDark: '#143a1c',
+    skyTop: '#1e3799',
+    skyMid: '#e67e22',
+    skyBottom: '#f9ca24',
+    sunColor: '#ffd32a',
+    mountainFar: '#1e8449',
+    mountainColor: '#145a32',
+    grassLight: '#2ecc71',
+    grassDark: '#27ae60',
     roadLight: '#525e54',
     roadDark: '#444f46',
-    rumbleLight: '#e74c3c',
-    rumbleDark: '#f5f6fa',
+    rumbleLight: '#ffd32a',
+    rumbleDark: '#c0392b',
     laneColor: '#ffffff',
-    sideTheme: 'alishan',
-    horizonTheme: 'alishan',
-    streetSequence: ['PROP_ALISHAN_WOOD_STATION', 'PROP_SACRED_RED_CYPRESS', 'PROP_ZHUSHAN_SUNRISE_DECK'],
+    sideTheme: 'meishan_tea',
+    horizonTheme: 'meishan_clouds',
+    streetSequence: ['PROP_TAIPING_SUSPENSION_BRIDGE', 'PROP_TEA_TERRACE_DECK', 'PROP_WANGFENG_PAVILION'],
     obstacleType: 'CYPRESS_TREE'
   },
 
   // ==================== 東部 (6) ====================
   {
-    id: 'taroko',
+    id: 'yunshanshui',
     region: '東部',
-    spotName: '太魯閣國家公園',
-    name: '東部 ‧ 太魯閣國家公園',
-    category: '壯麗山谷（自然）',
-    sceneryDesc: '絕壁千仞、立霧溪水穿石咆哮、險峻峽谷透出的一線天與壯麗岩理紋理。',
-    architectureDesc: '長春祠、太魯閣牌樓、岳王亭吊橋、九曲洞與燕子口封閉明隧道走廊。',
-    geologyDesc: '歐亞板塊與菲律賓海板塊擠壓抬升之世界級大理岩峽谷、急流下切海蝕壺穴。',
+    spotName: '壽豐雲山水',
+    name: '東部 ‧ 花蓮壽豐 雲山水夢幻湖',
+    category: '落羽松湖畔（自然）',
+    sceneryDesc: '宛如歐洲童話的蒂芬妮藍夢幻湖，四季變換的落羽松倒影，白雲與中央山脈倒映湖面。',
+    architectureDesc: '歐風城堡莊園民宿、夢幻湖落羽松跳石瀑布水圳步道、木棧水岸觀景平台。',
+    geologyDesc: '花東縱谷平原沖積扇低窪濕地、天然清澈湧泉湧出形成之廣闊生態湖泊。',
     timeLimit: 60,
-    skyTop: '#2c3e50',
-    skyMid: '#4ca1af',
-    skyBottom: '#c4e0e5',
-    sunColor: '#ffffff',
-    mountainFar: '#576574',
-    mountainColor: '#3d4852',
-    grassLight: '#636e72',
-    grassDark: '#4b5558',
-    roadLight: '#5a6265',
-    roadDark: '#4d5457',
-    rumbleLight: '#ff9f43',
-    rumbleDark: '#222f3e',
+    skyTop: '#0984e3',
+    skyMid: '#74b9ff',
+    skyBottom: '#dff9fb',
+    sunColor: '#ffeaa7',
+    mountainFar: '#10ac84',
+    mountainColor: '#1e824c',
+    grassLight: '#2ed573',
+    grassDark: '#26af61',
+    roadLight: '#57606f',
+    roadDark: '#4b525e',
+    rumbleLight: '#00d2d3',
+    rumbleDark: '#ffffff',
     laneColor: '#ffd32a',
-    sideTheme: 'taroko',
-    horizonTheme: 'taroko',
-    streetSequence: ['PROP_CHANGCHUN_SHRINE', 'PROP_YUEWANG_BRIDGE', 'PROP_SWALLOW_GROTTO_TUNNEL'],
+    sideTheme: 'yunshanshui_cypress',
+    horizonTheme: 'yunshanshui_lake',
+    streetSequence: ['PROP_EURO_CASTLE_MANOR', 'PROP_CYPRESS_STEP_STONES', 'PROP_LAKE_BOARDWALK'],
     obstacleType: 'CLIFF_ROCK'
   },
   {
@@ -526,44 +526,44 @@ const SCENIC_STAGES_LIST = [
     obstacleType: 'CYPRESS_TREE'
   },
   {
-    id: 'sanxiantai',
+    id: 'jialulan',
     region: '東部',
-    spotName: '台東三仙台',
-    name: '東部 ‧ 台東三仙台',
-    category: '離岸礁岩（自然）',
-    sceneryDesc: '巨浪拍打黑色礁岩、朝陽穿透八拱橋剪影、離岸孤島散發的原始蠻荒之美。',
-    architectureDesc: '跨海八拱波浪步道橋、三仙台燈杆（日治燈塔遺跡）、地質解說木棧道。',
-    geologyDesc: '火山噴發形成的都巒山層火山角礫岩、海蝕柱、海蝕平台與離岸海蝕小島。',
+    spotName: '加路蘭海岸',
+    name: '東部 ‧ 台東加路蘭遊憩區',
+    category: '漂流木地景藝術（自然與人文）',
+    sceneryDesc: '浩瀚無垠的湛藍太平洋，自然原始的漂流木大地藝術裝置，椰影婆娑的大草原與拍岸白色浪花。',
+    architectureDesc: '漂流木裝置藝術（哭泣的露珠、千手的約定）、原民手作茅草工坊、海岸觀景木棧平台。',
+    geologyDesc: '卑南溪出海口階地沉積、都蘭灣弧形海岸、南側小野柳砂頁岩互層海蝕奇岩（豆腐岩、蜂窩岩）。',
     timeLimit: 60,
-    skyTop: '#1e3799',
-    skyMid: '#eb2f06',
-    skyBottom: '#f6b93b',
+    skyTop: '#0052a5',
+    skyMid: '#00a8ff',
+    skyBottom: '#dff9fb',
     sunColor: '#ffd32a',
     mountainFar: '#2f3640',
     mountainColor: '#1e272e',
-    grassLight: '#353b48',
-    grassDark: '#2f3640',
+    grassLight: '#00b894',
+    grassDark: '#00947a',
     roadLight: '#57606f',
     roadDark: '#48505c',
-    rumbleLight: '#00a8ff',
+    rumbleLight: '#00cec9',
     rumbleDark: '#ffffff',
     laneColor: '#ffd32a',
-    sideTheme: 'suhua',
-    horizonTheme: 'sanxiantai_bridge',
-    streetSequence: ['PROP_VOLCANIC_REEF', 'PROP_EIGHT_ARCH_BRIDGE', 'PROP_ISLAND_BEACON'],
-    obstacleType: 'CLIFF_ROCK'
+    sideTheme: 'jialulan_coast',
+    horizonTheme: 'jialulan_pacific',
+    streetSequence: ['PROP_DRIFTWOOD_ART', 'PROP_XIAOYELIU_REEF', 'PROP_PACIFIC_PALM'],
+    obstacleType: 'PALM_TREE'
   },
 
   // ==================== 南部 (5) ====================
   {
-    id: 'tainan',
+    id: 'anping',
     region: '南部',
-    spotName: '台南府城古蹟群',
-    name: '南部 ‧ 台南府城古蹟群',
-    category: '古蹟歷史（人文）',
-    sceneryDesc: '老榕盤根古牆、紅磚城門與古砲台斑駁殘影、熱鬧巷弄間的慢活香火氣息。',
-    architectureDesc: '赤嵌樓（普羅民遮城）、安平古堡（熱蘭遮城殘壁）、安平樹屋、兌悅門。',
-    geologyDesc: '台江內海淤積平原、倒風內海陸化地形、古海岸沙丘與潟湖地貌。',
+    spotName: '台南安平古堡',
+    name: '南部 ‧ 台南安平古堡與億載金城',
+    category: '大航海紅磚要塞（歷史人文）',
+    sceneryDesc: '1624年荷蘭東印度公司熱蘭遮城，三層紅磚階梯城台、純白高聳瞭望圓塔、古榕盤根錯節與清代古砲。',
+    architectureDesc: '安平古堡三層紅磚城垣殘蹟、白色瞭望塔、古砲台、億載金城西洋八角稜堡與圓拱城門。',
+    geologyDesc: '台江內海潟湖古沉積陸地、安平大員沙洲與鹽水溪出海口沖積地。',
     timeLimit: 60,
     skyTop: '#8e44ad',
     skyMid: '#d35400',
@@ -576,11 +576,11 @@ const SCENIC_STAGES_LIST = [
     roadLight: '#5d534f',
     roadDark: '#4f4643',
     rumbleLight: '#c0392b',
-    rumbleDark: '#f5cba7',
+    rumbleDark: '#ecf0f1',
     laneColor: '#ffd32a',
-    sideTheme: 'red_brick_fort',
-    horizonTheme: 'tainan_forts',
-    streetSequence: ['PROP_ANPING_FORT', 'PROP_BANYAN_TREEHOUSE', 'PROP_CHIHKAN_PAVILION'],
+    sideTheme: 'anping_brick',
+    horizonTheme: 'anping_fort',
+    streetSequence: ['PROP_ZEELANDIA_FORT', 'PROP_ANPING_WHITE_TOWER', 'PROP_YIZAI_CANNON_BASTION'],
     obstacleType: 'LANTERN_POLE'
   },
   {
@@ -640,14 +640,14 @@ const SCENIC_STAGES_LIST = [
     obstacleType: 'PALM_TREE'
   },
   {
-    id: 'eluanbi',
+    id: 'nanwan',
     region: '南部',
-    spotName: '墾丁鵝鑾鼻燈塔',
-    name: '南部 ‧ 墾丁鵝鑾鼻燈塔',
-    category: '岬角燈塔（自然／人文）',
-    sceneryDesc: '孤懸海角的純白燈塔、眺望巴士海峽與太平洋的深藍海水、開闊濱海草坪。',
-    architectureDesc: '純白圓形防衛型武裝燈塔（設有壕溝與槍眼）、日治文獻紀念碑、觀景步道。',
-    geologyDesc: '台灣最南端岬角、上升珊瑚礁石灰岩溶洞、裙礁地形。',
+    spotName: '墾丁南灣',
+    name: '南部 ‧ 屏東墾丁南灣遊憩區',
+    category: '熱帶金黃沙灘（自然）',
+    sceneryDesc: '600公尺弧形金色細沙沙灘，漸層湛藍的熱帶海灣，五彩遮陽傘海、水上摩托車馳騁浪花。',
+    architectureDesc: '南灣水上活動服務中心、五彩海灘遮陽傘群、白色木造衝浪俱樂部小屋、椰林景觀步道。',
+    geologyDesc: '恆春石灰岩台地環抱之海灣、貝殼沙與石英沙混合之細緻金黃沙灘、裙礁珊瑚海岸。',
     timeLimit: 60,
     skyTop: '#0077b6',
     skyMid: '#00b4d8',
@@ -655,16 +655,16 @@ const SCENIC_STAGES_LIST = [
     sunColor: '#ffd32a',
     mountainFar: '#2a9d8f',
     mountainColor: '#1d786d',
-    grassLight: '#52b788',
-    grassDark: '#40916c',
+    grassLight: '#f1c40f',
+    grassDark: '#e67e22',
     roadLight: '#5c677d',
     roadDark: '#4c5669',
-    rumbleLight: '#00f0ff',
-    rumbleDark: '#ffffff',
-    laneColor: '#ffd32a',
-    sideTheme: 'kenting',
-    horizonTheme: 'kenting',
-    streetSequence: ['PROP_CORAL_LIMESTONE', 'PROP_LAWN_MONUMENT', 'PROP_ELUANBI_LIGHTHOUSE'],
+    rumbleLight: '#ff3838',
+    rumbleDark: '#ffd32a',
+    laneColor: '#ffffff',
+    sideTheme: 'nanwan_sand',
+    horizonTheme: 'nanwan_beach',
+    streetSequence: ['PROP_BEACH_PARASOL_CLUSTER', 'PROP_SURF_WATER_SCOOTER', 'PROP_WIND_TURBINE_BAY'],
     obstacleType: 'PALM_TREE'
   },
   {
@@ -1502,21 +1502,21 @@ const STAGE_SUBSPOTS_MAP = {
     { kind: 'NATURE_WAVE', title: '🍂 大崙山銀杏森林金黃山谷＆雲霧高山茶園', sign: '鹿谷銀杏森林金黃雲海', color: '#f1c40f', accent: '#2ecc71' },
     { kind: 'MOUNTAIN', title: '💦 杉林溪松瀧岩瀑布天然砂岩鐘乳大岩洞', sign: '杉林溪首景・松瀧岩水簾洞', color: '#00cec9', accent: '#576574' }
   ],
-  alishan: [
-    { kind: 'PAIFANG', title: '⛩️ 阿里山國家森林遊樂區紅檜大牌樓', sign: '阿里山國家森林遊樂區', color: '#c0392b', accent: '#ffd32a' },
-    { kind: 'SNACK', title: '🍱 奮起湖老街鐵路木片便當、愛玉＆現烤甜甜圈攤', sign: '奮起湖雙主菜鐵路便當・野生愛玉', color: '#d35400', accent: '#ffeaa7' },
-    { kind: 'RAILWAY', title: '🚂 阿里山森林小火車穿越吉野櫻花鐵道', sign: '阿里山紅色小火車＆櫻王', color: '#e74c3c', accent: '#fd79a8' },
-    { kind: 'PAVILION', title: '🏞️ 姊妹潭翠綠高山湖泊＆檜木相思雙亭', sign: '阿里山姊妹潭水上檜木亭', color: '#16a085', accent: '#8e44ad' },
-    { kind: 'FOREST', title: '🌲 香林神木、三代木＆千年紅檜巨木群棧道', sign: '千年紅檜神木群步道', color: '#6e2c00', accent: '#27ae60' },
-    { kind: 'MOUNTAIN', title: '🌅 祝山觀景台＆小笠原山破曉翻騰雲海日出', sign: '阿里山五奇・祝山日出雲海', color: '#f39c12', accent: '#ffffff' }
+  meishan: [
+    { kind: 'PAIFANG', title: '⛩️ 梅山太平老街迎賓原木大牌樓', sign: '嘉義梅山・太平雲梯老街', color: '#8d6e63', accent: '#ffd32a' },
+    { kind: 'SNACK', title: '🍵 梅山高山烏龍茶、苦茶油雞＆茶葉蛋小吃攤', sign: '梅山冠軍高山茶・苦茶油麵線', color: '#27ae60', accent: '#ffeaa7' },
+    { kind: 'BRIDGE', title: '🌉 海拔千米「太平雲梯」單跨白色高空懸索吊橋', sign: '海拔1000M・全台最長單跨吊橋', color: '#ffffff', accent: '#00a8ff' },
+    { kind: 'MOUNTAIN', title: '☁️ 望風亭俯瞰嘉南平原萬家燈火與翻騰夕陽雲海', sign: '太平望風亭・夕照雲海大景', color: '#f39c12', accent: '#e74c3c' },
+    { kind: 'NATURE_WAVE', title: '🍃 雲之南道層疊翠綠階梯高山茶園步道景觀', sign: '高山茶園階梯綠浪・雲之南道', color: '#2ecc71', accent: '#1e8449' },
+    { kind: 'ARCADE', title: '🏮 太平老街古早紅磚聚落、竹林古道與陶藝彩繪', sign: '百年太平老街・竹林茶坊古道', color: '#c0392b', accent: '#ffd32a' }
   ],
-  taroko: [
-    { kind: 'PAIFANG', title: '⛩️ 東西橫貫公路「太魯閣牌樓」紅金飛簷山門', sign: '東西橫貫公路・太魯閣', color: '#c0392b', accent: '#ffd32a' },
-    { kind: 'SNACK', title: '🍋 新城佳興冰果室檸檬汁＆太魯閣竹筒飯烤肉攤', sign: '佳興黃金檸檬汁・原民石板烤肉', color: '#27ae60', accent: '#f1c40f' },
-    { kind: 'TEMPLE', title: '🏯 長春祠唐式金瓦祠堂＆山壁湧泉飛瀑山景', sign: '長春聽濤・斷崖飛瀑祠堂', color: '#e74c3c', accent: '#00cec9' },
-    { kind: 'BRIDGE', title: '🌉 岳王亭吊橋＆慈母橋純白大理石護欄青蛙石', sign: '慈母橋大理石峽谷與青蛙石', color: '#ecf0f1', accent: '#c0392b' },
-    { kind: 'ROCK_GEO', title: '🪨 燕子口大理石絕壁壺穴＆半開放明隧道', sign: '燕子口一線天峽谷明隧道', color: '#7f8c8d', accent: '#dfe6e9' },
-    { kind: 'MOUNTAIN', title: '⛰️ 九曲洞千仞大理石垂直峭壁＆立霧溪急流', sign: '如腸之迴・九曲洞大理岩峽谷', color: '#576574', accent: '#00a8ff' }
+  yunshanshui: [
+    { kind: 'PAIFANG', title: '⛩️ 雲山水植物農莊歐風大門景觀牌樓', sign: '花蓮壽豐・雲山水夢幻湖', color: '#0984e3', accent: '#ffffff' },
+    { kind: 'SNACK', title: '🍋 壽豐豐春冰果店天然甘蔗冰＆柴燒芋頭攤', sign: '壽豐古早味甘蔗冰・柴燒紅豆芋頭', color: '#e67e22', accent: '#ffeaa7' },
+    { kind: 'CASTLE', title: '🏰 夢幻湖畔英倫都鐸風城堡莊園民宿與綠茵草坪', sign: '歐洲童話城堡莊園・湖畔草坪', color: '#2c3e50', accent: '#f1c40f' },
+    { kind: 'BRIDGE', title: '🌉 夢幻湖落羽松跳石水圳與涓涓流水瀑布步道', sign: '夢幻湖落羽松跳石水瀑步道', color: '#00cec9', accent: '#ffffff' },
+    { kind: 'FOREST', title: '🌲 四季變幻金黃翠綠落羽松水中森林倒影', sign: '水漾落羽松林・金黃翠綠倒影', color: '#27ae60', accent: '#f39c12' },
+    { kind: 'OCEAN', title: '🦢 蒂芬妮藍碧湖天鵝水鴨悠游與中央山脈山景', sign: '蒂芬妮藍夢幻湖・天鵝倒影', color: '#00cec9', accent: '#74b9ff' }
   ],
   qixingtan: [
     { kind: 'PAIFANG', title: '⛩️ 七星潭海岸風景特定區藍白海浪牌樓', sign: '花蓮新城・七星潭月牙灣', color: '#0984e3', accent: '#ffffff' },
@@ -1550,21 +1550,21 @@ const STAGE_SUBSPOTS_MAP = {
     { kind: 'TAKESHI_TREE', title: '🌳 伯朗大道「金城武樹（茄冬樹）」＆奉茶石壺', sign: 'I SEE YOU・金城武樹奉茶點', color: '#1e8449', accent: '#8d6e63' },
     { kind: 'OCEAN', title: '🪷 池上大坡池國家級斷層濕地、竹筏＆荷花池景', sign: '池上斷層湖泊・大坡池濕地', color: '#0097e6', accent: '#fd79a8' }
   ],
-  sanxiantai: [
-    { kind: 'PAIFANG', title: '⛩️ 東海岸三仙台遊憩區阿美族圖騰牌樓', sign: '東部海岸・台東成功三仙台', color: '#c0392b', accent: '#00a8ff' },
-    { kind: 'SNACK', title: '🐟 成功漁港鬼頭刀魚羹、炸飛魚＆東河包子小吃攤', sign: '成功旗魚生魚片・鬼頭刀魚羹', color: '#e67e22', accent: '#ffd32a' },
-    { kind: 'SHEEP', title: '🐐 比西里岸部落幾米漂流木領頭羊＆太平洋海景', sign: '比西里岸部落・漂流木大羊海景', color: '#8d6e63', accent: '#00cec9' },
-    { kind: 'ROCK_GEO', title: '🪨 都巒山層黑色火山角礫岩、海蝕溝＆礫石海灘', sign: '火山角礫岩海蝕平台與圓礫灘', color: '#2d3436', accent: '#dfe6e9' },
-    { kind: 'BRIDGE', title: '🌉 三仙台「八拱跨海波浪步橋」橫越碧藍太平洋', sign: '八拱波浪跨海大橋海景', color: '#ffffff', accent: '#e74c3c' },
-    { kind: 'LIGHTHOUSE', title: '🏝️ 離岸三仙台珊瑚礁島、合歡洞＆日治白色燈杆', sign: '呂洞賓李鐵拐何仙姑・三仙台島', color: '#1e272e', accent: '#ffd32a' }
+  jialulan: [
+    { kind: 'PAIFANG', title: '⛩️ 加路蘭遊憩區阿美族漂流木原生迎賓牌樓', sign: '東部海岸・台東加路蘭遊憩區', color: '#c0392b', accent: '#00cec9' },
+    { kind: 'SNACK', title: '🥥 東河肉包、加路蘭手洗愛玉冰＆現烤飛魚攤', sign: '正宗東河肉包・手洗野生愛玉', color: '#e67e22', accent: '#ffd32a' },
+    { kind: 'SHEEP', title: '🎨 「哭泣的露珠」巨型漂流木大地裝置藝術', sign: '加路蘭地標・哭泣的露珠大地藝術', color: '#8d6e63', accent: '#00a8ff' },
+    { kind: 'ROCK_GEO', title: '🗿 小野柳地質奇岩・蜂窩岩、豆腐岩海蝕奇觀', sign: '小野柳砂頁岩互層海蝕豆腐岩', color: '#2d3436', accent: '#dfe6e9' },
+    { kind: 'FOREST', title: '🌴 迎風搖曳熱帶椰子林大道與碧綠觀海大草原', sign: '椰影婆娑・太平洋大草原步道', color: '#00b894', accent: '#ffeaa7' },
+    { kind: 'OCEAN', title: '🌊 遠眺太平洋蔚藍深海、綠島剪影與拍岸巨浪', sign: '都蘭灣黑潮浪花・遠眺綠島剪影', color: '#0052a5', accent: '#00f0ff' }
   ],
-  tainan: [
-    { kind: 'PAIFANG', title: '⛩️ 全台首學台南孔廟「禮門義路」紅牆大牌樓', sign: '全臺首學・台南府城古蹟群', color: '#c0392b', accent: '#ffd32a' },
-    { kind: 'SNACK', title: '🍜 國華街度小月擔仔麵、溫體牛肉湯＆棺材板攤', sign: '台南牛肉湯・擔仔麵・蝦仁肉圓', color: '#d35400', accent: '#ffeaa7' },
-    { kind: 'BAROQUE', title: '🏢 1932 林百貨五層樓昭和摩登古蹟＆頂樓鳥居', sign: '五層樓仔・台南林百貨', color: '#a04000', accent: '#f39c12' },
-    { kind: 'HERITAGE', title: '🏰 安平古堡紅磚高聳瞭望塔＆熱蘭遮城古城牆', sign: '1624 熱蘭遮城・安平古堡', color: '#b03a2e', accent: '#ecf0f1' },
-    { kind: 'FOREST', title: '🌳 安平樹屋百年老榕氣根盤踞德記洋行紅磚倉庫', sign: '樹以牆為幹・安平樹屋奇景', color: '#1e8449', accent: '#a04000' },
-    { kind: 'TEMPLE', title: '🏯 赤嵌樓海神廟重簷閣樓＆兌悅門老古石城門', sign: '普羅民遮城・台南赤嵌樓', color: '#c0392b', accent: '#f1c40f' }
+  anping: [
+    { kind: 'PAIFANG', title: '⛩️ 安平老街開台第一街木造復古迎賓牌樓', sign: '開台第一街・台南安平老街', color: '#c0392b', accent: '#ffd32a' },
+    { kind: 'SNACK', title: '🍤 安平周氏蝦捲、現烤椪餅＆同記安平豆花攤', sign: '安平現炸周氏蝦捲・傳統黑糖豆花', color: '#d35400', accent: '#ffeaa7' },
+    { kind: 'BAROQUE', title: '🏰 1624 熱蘭遮城三層紅磚階梯城基與古城牆殘壁', sign: '荷治大員要塞・熱蘭遮城古城垣', color: '#a04000', accent: '#ecf0f1' },
+    { kind: 'HERITAGE', title: '🗼 純白高聳安平古堡瞭望塔、觀景窗與紅頂', sign: '安平地標・純白古堡圓形瞭望塔', color: '#ffffff', accent: '#e74c3c' },
+    { kind: 'TEMPLE', title: '💣 億載金城二鯤鯓砲台西洋稜堡與清代阿姆斯壯大砲', sign: '萬流砥柱・億載金城八角稜堡古砲', color: '#935116', accent: '#f1c40f' },
+    { kind: 'FOREST', title: '🌳 安平樹屋百年雀榕盤根錯節倉庫與台江運河夕照', sign: '樹以牆為幹・安平樹屋台江夕照', color: '#1e8449', accent: '#e67e22' }
   ],
   foguangshan: [
     { kind: 'PAIFANG', title: '⛩️ 佛光山「不二門」＆禮敬大廳宏偉山門牌樓', sign: '高雄大樹・佛光山佛陀紀念館', color: '#d4ac0d', accent: '#922b21' },
@@ -1582,13 +1582,13 @@ const STAGE_SUBSPOTS_MAP = {
     { kind: 'ROCK_GEO', title: '🪨 船帆石（尼克森頭）珊瑚巨岩矗立碧藍海岸', sign: '高18公尺珊瑚礁・船帆石海景', color: '#d1b26f', accent: '#00cec9' },
     { kind: 'FESTIVAL', title: '🍹 墾丁大街霓虹南洋酒吧、衝浪板店＆椰林街景', sign: '墾丁大街不夜城霓虹市集', color: '#8e44ad', accent: '#00f0ff' }
   ],
-  eluanbi: [
-    { kind: 'PAIFANG', title: '⛩️ 鵝鑾鼻公園珊瑚礁石迎賓牌樓＆椰林大道', sign: '台灣最南端・鵝鑾鼻公園', color: '#0097e6', accent: '#ffd32a' },
-    { kind: 'SNACK', title: '🐚 砂島貝殼砂館旁恆春綠豆蒜、烤飛魚＆椰子水攤', sign: '恆春古早味綠豆蒜・現剖冰椰子', color: '#2ecc71', accent: '#ffeaa7' },
-    { kind: 'ROCK_GEO', title: '🪨 珊瑚礁石灰岩洞穴、親吻石、冤家路＆一線天', sign: '隆起珊瑚礁石灰岩迷宮步道', color: '#7f8c8d', accent: '#27ae60' },
-    { kind: 'HERITAGE', title: '🗿 日治「台灣八景・鵝鑾鼻」花崗岩紀念石碑＆大草原', sign: '台灣八景鵝鑾鼻紀念碑', color: '#95a5a6', accent: '#ffd32a' },
-    { kind: 'LIGHTHOUSE', title: '🗼 1883 純白圓形武裝「鵝鑾鼻燈塔」＆槍眼壕溝圍牆', sign: '東亞之光・鵝鑾鼻武裝燈塔', color: '#ffffff', accent: '#e74c3c' },
-    { kind: 'OCEAN', title: '🌊 台灣最南端意象標碑＆巴士海峽、太平洋交會海景', sign: '北緯21度53分・台灣最南點海景', color: '#0052a5', accent: '#00f0ff' }
+  nanwan: [
+    { kind: 'PAIFANG', title: '⛩️ 墾丁南灣熱帶海浪圖騰迎賓牌樓', sign: '國境之南・墾丁南灣遊憩區', color: '#0097e6', accent: '#ffd32a' },
+    { kind: 'SNACK', title: '🍧 恆春阿伯綠豆蒜、芒果雪花冰＆現烤大魷魚攤', sign: '恆春阿伯綠豆蒜・新鮮芒果冰', color: '#f39c12', accent: '#ffffff' },
+    { kind: 'OCEAN', title: '🏖️ 南灣金色弧形沙灘與五彩斑斕遮陽傘海', sign: '600M金黃細沙海灣・遮陽傘海', color: '#f1c40f', accent: '#00a8ff' },
+    { kind: 'OCEAN', title: '🏄 碧藍浪花衝浪手、水上摩托車＆香蕉船馳騁', sign: '南灣水上摩托車與衝浪狂飆', color: '#00cec9', accent: '#e74c3c' },
+    { kind: 'WINDMILL', title: '💨 遠眺核三廠白色巨型風力發電機與大尖石山', sign: '白色風力大風車・大尖石山山景', color: '#ffffff', accent: '#27ae60' },
+    { kind: 'FESTIVAL', title: '🌴 椰林比基尼大道、衝浪俱樂部彩繪小屋街景', sign: '南灣南洋椰林大道與衝浪小屋', color: '#e84393', accent: '#00f0ff' }
   ],
   longpan: [
     { kind: 'PAIFANG', title: '⛩️ 台26線佳鵝公路「龍磐公園」木造入口牌樓', sign: '佳鵝公路・墾丁龍磐大崩崖', color: '#ae2012', accent: '#ee9b00' },
@@ -1802,23 +1802,23 @@ const GEO_ORDER_SCENIC_IDS = [
   'liuqiu',       // 1. 屏東小琉球花瓶岩 (22.35°N, 120.38°E - 極南西側外海)
   'dapengbay',    // 2. 屏東東港大鵬灣跨海大橋 (22.45°N, 120.48°E - 屏東西岸潟湖)
   'kenting_st',   // 3. 屏東墾丁大街 (21.94°N, 120.79°E - 極南西側海岸)
-  'eluanbi',      // 4. 屏東墾丁鵝鑾鼻燈塔 (21.90°N, 120.85°E - 台灣最南端岬角)
+  'nanwan',       // 4. 屏東墾丁南灣遊憩區 (21.95°N, 120.76°E - 恆春熱帶金黃沙灘)
   'longpan',      // 5. 屏東墾丁龍磐公園 (21.92°N, 120.84°E - 極南東側太平洋崩崖)
 
   // 【第 3～4 區：高雄港都、台南古都鹽田與澎湖南海（由南至北、由西到東）】
   'qimei',        // 6. 澎湖七美雙心石滬 (23.20°N, 119.42°E - 台灣海峽極西端)
   'qigu',         // 7. 台南七股鹽山＆黑面琵鷺 (23.15°N, 120.10°E - 台南極西濱海鹽田)
-  'tainan',       // 8. 台南府城古蹟群 (22.99°N, 120.20°E - 南部西岸平原)
+  'anping',       // 8. 台南安平古堡與億載金城 (23.00°N, 120.16°E - 安平紅磚古堡砲台)
   'lotuspond',    // 9. 高雄左營蓮池潭龍虎塔 (22.68°N, 120.29°E - 高雄西側蓮池潭)
   'foguangshan',  // 10. 高雄佛光山佛陀紀念館 (22.75°N, 120.44°E - 高雄內陸丘陵)
 
-  // 【第 5～6 區：嘉南平原、阿里山與南迴／花東縱谷南段（由南至北、由西到東）】
+  // 【第 5～6 區：嘉南平原、阿里山山脈與南迴／花東縱谷南段（由南至北、由西到東）】
   'npmsouth',     // 11. 嘉義故宮南院＆北回歸線館 (23.47°N, 120.29°E - 嘉南平原西側)
-  'alishan',      // 12. 嘉義阿里山森林遊樂區 (23.51°N, 120.80°E - 中南部高山)
+  'meishan',      // 12. 嘉義梅山太平雲梯 (23.56°N, 120.60°E - 海拔千米高山茶園雲梯)
   'duoliang',     // 13. 台東太麻里多良火車站 (22.50°N, 120.96°E - 南迴太平洋海岸)
   'guanshan',     // 14. 台東關山鎮 (23.04°N, 121.16°E - 花東縱谷南段偏西)
   'chishang',     // 15. 台東池上伯朗大道 (23.12°N, 121.21°E - 花東縱谷南段偏東)
-  'sanxiantai',   // 16. 台東成功三仙台 (23.12°N, 121.41°E - 東部太平洋海岸)
+  'jialulan',     // 16. 台東卑南加路蘭海岸 (22.81°N, 121.19°E - 東海岸漂流木藝術)
 
   // 【第 7～8 區：雲林濁水溪、台中西海岸至南投高山湖泊（由南至北、由西到東）】
   'beigang',      // 17. 雲林西螺大橋＆北港朝天宮 (23.56°N, 120.30°E - 雲林西部平原)
@@ -1828,11 +1828,11 @@ const GEO_ORDER_SCENIC_IDS = [
   'cingjing',     // 21. 南投清境農場 (24.05°N, 121.16°E - 中橫高山西段)
   'hehuanshan',   // 22. 合歡山暗空公園 (24.14°N, 121.27°E - 中橫最高點武嶺)
 
-  // 【第 9～10 區：花東縱谷中北段、東海岸奇岩與蘇花太魯閣（由南至北、由西到東）】
+  // 【第 9～10 區：花東縱谷中北段、東海岸奇岩與蘇花絕壁（由南至北、由西到東）】
   'ruisui',       // 23. 花蓮瑞穗北回歸線＆牧場 (23.49°N, 121.36°E - 花東縱谷中段)
   'shitiping',    // 24. 花蓮豐濱石梯坪＆親不知子 (23.48°N, 121.51°E - 東海岸中段奇岩)
   'liyutan',      // 25. 花蓮壽豐鯉魚潭 (23.92°N, 121.50°E - 花蓮縱谷湖泊)
-  'taroko',       // 26. 花蓮太魯閣國家公園 (24.16°N, 121.62°E - 花蓮峽谷)
+  'yunshanshui',  // 26. 花蓮壽豐雲山水夢幻湖 (23.83°N, 121.52°E - 落羽松跳石瀑布)
   'qixingtan',    // 27. 花蓮新城七星潭 (24.03°N, 121.63°E - 花蓮太平洋東岸)
   'qingshui',     // 28. 花蓮蘇花公路清水斷崖 (24.20°N, 121.67°E - 蘇花海岸絕壁)
 
@@ -1891,23 +1891,23 @@ const STAGE_WEATHER_CONFIG = {
   liuqiu:         { primary: 'sunset',  transitions: ['sunny', 'rainy'] },
   dapengbay:      { primary: 'sunny',   transitions: ['sunset', 'rainy'] },
   kenting_st:     { primary: 'sunset',  transitions: ['rainy', 'sunny'] },
-  eluanbi:        { primary: 'sunny',   transitions: ['sunrise', 'sunset'] },
+  nanwan:         { primary: 'sunny',   transitions: ['sunrise', 'sunset'] },
   longpan:        { primary: 'sunrise', transitions: ['sunny', 'foggy'] },
 
   // 南部與澎湖
   qimei:          { primary: 'sunny',   transitions: ['sunset', 'sunrise'] },
   qigu:           { primary: 'sunset',  transitions: ['sunny', 'foggy'] },
-  tainan:         { primary: 'sunset',  transitions: ['sunny', 'rainy'] },
+  anping:         { primary: 'sunset',  transitions: ['sunny', 'rainy'] },
   lotuspond:      { primary: 'sunny',   transitions: ['sunset', 'rainy'] },
   foguangshan:    { primary: 'sunrise', transitions: ['sunny', 'foggy'] },
 
-  // 嘉南、阿里山、南迴與花東縱谷南段
+  // 嘉南、阿里山山脈、南迴與花東縱谷南段
   npmsouth:       { primary: 'sunny',   transitions: ['sunset', 'rainy'] },
-  alishan:        { primary: 'sunrise', transitions: ['foggy', 'rainy'] },
+  meishan:        { primary: 'sunset',  transitions: ['foggy', 'sunrise'] },
   duoliang:       { primary: 'sunrise', transitions: ['sunny', 'rainy'] },
   guanshan:       { primary: 'sunset',  transitions: ['sunny', 'rainy'] },
   chishang:       { primary: 'sunny',   transitions: ['sunset', 'rainy'] },
-  sanxiantai:     { primary: 'sunrise', transitions: ['sunny', 'rainy'] },
+  jialulan:       { primary: 'sunrise', transitions: ['sunny', 'rainy'] },
 
   // 中部西岸至中央山脈
   beigang:        { primary: 'sunset',  transitions: ['sunny', 'rainy'] },
@@ -1917,11 +1917,11 @@ const STAGE_WEATHER_CONFIG = {
   cingjing:       { primary: 'sunny',   transitions: ['foggy', 'rainy'] },
   hehuanshan:     { primary: 'sunrise', transitions: ['foggy', 'sunny'] },
 
-  // 花東縱谷北段、東海岸與太魯閣清水斷崖
+  // 花東縱谷北段、東海岸與蘇花絕壁
   ruisui:         { primary: 'sunny',   transitions: ['foggy', 'rainy'] },
   shitiping:      { primary: 'rainy',   transitions: ['sunny', 'foggy'] },
   liyutan:        { primary: 'foggy',   transitions: ['sunrise', 'sunny'] },
-  taroko:         { primary: 'sunny',   transitions: ['foggy', 'rainy'] },
+  yunshanshui:    { primary: 'sunny',   transitions: ['foggy', 'rainy'] },
   qixingtan:      { primary: 'sunrise', transitions: ['sunny', 'sunset'] },
   qingshui:       { primary: 'sunny',   transitions: ['sunrise', 'foggy'] },
 
@@ -2024,14 +2024,14 @@ class TaiwanRouteManager {
     // 將已按「由南至北、由西到東」排序的 38 個中途景點劃分為 13 個循序漸進的地理緯度/經度區段 (第 2 關 ~ 第 14 關)
     const tiers = [
       ['liuqiu', 'dapengbay', 'kenting_st'],          // 第 2 關：小琉球 ➔ 東港大鵬灣跨海大橋 ➔ 墾丁大街
-      ['eluanbi', 'longpan', 'duoliang'],             // 第 3 關：鵝鑾鼻燈塔 ➔ 龍磐崩崖 ➔ 台東太麻里多良火車站
-      ['qimei', 'qigu', 'tainan'],                    // 第 4 關：澎湖七美 ➔ 台南七股鹽山 ➔ 台南府城古蹟
+      ['nanwan', 'longpan', 'duoliang'],              // 第 3 關：墾丁南灣沙灘 ➔ 龍磐崩崖 ➔ 台東太麻里多良火車站
+      ['qimei', 'qigu', 'anping'],                    // 第 4 關：澎湖七美 ➔ 台南七股鹽山 ➔ 台南安平古堡與億載金城
       ['lotuspond', 'foguangshan', 'npmsouth'],       // 第 5 關：高雄蓮池潭龍虎塔 ➔ 佛光山大佛 ➔ 嘉義故宮南院與北回歸線館
-      ['alishan', 'guanshan', 'chishang', 'sanxiantai'], // 第 6 關：阿里山神木 ➔ 關山 ➔ 池上伯朗大道 ➔ 台東三仙台
+      ['meishan', 'guanshan', 'chishang', 'jialulan'], // 第 6 關：梅山太平雲梯 ➔ 關山 ➔ 池上伯朗大道 ➔ 台東加路蘭海岸
       ['beigang', 'gaomei', 'xitou'],                 // 第 7 關：雲林西螺大橋/北港朝天宮 ➔ 台中高美濕地 ➔ 溪頭妖怪村
       ['sunmoonlake', 'cingjing', 'hehuanshan'],      // 第 8 關：日月潭 ➔ 清境農場 ➔ 合歡山武嶺
       ['ruisui', 'shitiping', 'liyutan'],             // 第 9 關：花蓮瑞穗北回歸線與牧場 ➔ 石梯坪單面山 ➔ 壽豐鯉魚潭
-      ['taroko', 'qixingtan', 'qingshui'],            // 第 10 關：太魯閣峽谷 ➔ 七星潭月牙灣 ➔ 蘇花公路清水斷崖
+      ['yunshanshui', 'qixingtan', 'qingshui'],       // 第 10 關：壽豐雲山水夢幻湖 ➔ 七星潭月牙灣 ➔ 蘇花公路清水斷崖
       ['longteng', 'hsinchu_moat', 'taipingshan'],    // 第 11 關：苗栗三義龍騰斷橋 ➔ 新竹東門城與城隍廟 ➔ 宜蘭太平山
       ['tamsui', 'npm', 'yangmingshan'],              // 第 12 關：新北淡水情人橋与紅毛城 ➔ 台北故宮 ➔ 陽明山小油坑
       ['matsu', 'yehliu'],                            // 第 13 關：馬祖藍眼淚 ➔ 萬里野柳女王頭

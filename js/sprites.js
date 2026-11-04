@@ -1666,6 +1666,331 @@ class SpriteRenderer {
       return;
     }
 
+    if (hTheme === 'meishan_clouds') {
+      // 【嘉義梅山三十六彎・太平雲梯與高山茶園雲海】
+      // 遠景大阿里山層疊墨綠茶山稜線
+      ctx.fillStyle = '#1e382b';
+      ctx.beginPath();
+      ctx.moveTo(0, clampedHorizon);
+      ctx.lineTo(0, clampedHorizon - 70);
+      ctx.lineTo(width * 0.35, clampedHorizon - 105);
+      ctx.lineTo(width * 0.70, clampedHorizon - 65);
+      ctx.lineTo(width, clampedHorizon - 90);
+      ctx.lineTo(width, clampedHorizon);
+      ctx.closePath();
+      ctx.fill();
+
+      // 中景茶園梯田等高線斜紋
+      ctx.strokeStyle = '#27ae60';
+      ctx.lineWidth = 2;
+      for (let t = 0; t < 5; t++) {
+        ctx.beginPath();
+        ctx.moveTo(0, clampedHorizon - 45 + t * 8);
+        ctx.quadraticCurveTo(width * 0.35, clampedHorizon - 68 + t * 8, width * 0.75, clampedHorizon - 42 + t * 8);
+        ctx.stroke();
+      }
+
+      // 翻騰高山雲海（多層米白色雲浪）
+      for (let c = 0; c < 8; c++) {
+        const cx = ((c * 110 + now * 0.015) % (width + 120)) - 60;
+        const cy = clampedHorizon - 30 + (c % 3) * 6;
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
+        ctx.beginPath();
+        ctx.ellipse(cx, cy, 55, 14, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = 'rgba(255, 235, 180, 0.45)';
+        ctx.beginPath();
+        ctx.ellipse(cx + 8, cy - 3, 38, 9, 0, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // 橫跨兩座山嶺的「太平雲梯」單塔斜張吊橋（長度達281公尺）
+      const bridgeStartX = width * 0.22;
+      const bridgeEndX = width * 0.82;
+      const towerX = width * 0.28;
+      const deckY = clampedHorizon - 42;
+      const towerTopY = clampedHorizon - 86;
+
+      // 純白高聳單塔
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 3.5;
+      ctx.beginPath();
+      ctx.moveTo(towerX - 4, clampedHorizon - 20);
+      ctx.lineTo(towerX, towerTopY);
+      ctx.lineTo(towerX + 4, clampedHorizon - 20);
+      ctx.stroke();
+
+      // 主纜索與放射狀斜張鋼索
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.85)';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(bridgeStartX, deckY);
+      ctx.quadraticCurveTo(towerX + (bridgeEndX - towerX) * 0.45, deckY + 12, bridgeEndX, deckY);
+      ctx.stroke();
+
+      ctx.lineWidth = 1;
+      for (let s = 1; s <= 9; s++) {
+        const sx = bridgeStartX + (bridgeEndX - bridgeStartX) * (s / 10);
+        ctx.beginPath();
+        ctx.moveTo(towerX, towerTopY);
+        ctx.lineTo(sx, deckY);
+        ctx.stroke();
+      }
+
+      // 亮黃色橋面步行箱體
+      ctx.strokeStyle = '#f1c40f';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(bridgeStartX, deckY);
+      ctx.lineTo(bridgeEndX, deckY);
+      ctx.stroke();
+      return;
+    }
+
+    if (hTheme === 'yunshanshui_lake') {
+      // 【花蓮壽豐雲山水・夢幻湖與落羽松莊園】
+      // 遠景雄偉中央山脈山嵐
+      ctx.fillStyle = '#1b3a4b';
+      ctx.beginPath();
+      ctx.moveTo(0, clampedHorizon);
+      ctx.lineTo(0, clampedHorizon - 85);
+      ctx.lineTo(width * 0.32, clampedHorizon - 110);
+      ctx.lineTo(width * 0.65, clampedHorizon - 80);
+      ctx.lineTo(width, clampedHorizon - 95);
+      ctx.lineTo(width, clampedHorizon);
+      ctx.closePath();
+      ctx.fill();
+
+      // 湖畔都鐸式歐風石城堡莊園
+      const castleX = width * 0.72;
+      ctx.fillStyle = '#ecf0f1';
+      ctx.fillRect(castleX, clampedHorizon - 54, 46, 32);
+      // 斜尖紅磚屋頂
+      ctx.fillStyle = '#c0392b';
+      ctx.beginPath();
+      ctx.moveTo(castleX - 4, clampedHorizon - 54);
+      ctx.lineTo(castleX + 16, clampedHorizon - 78);
+      ctx.lineTo(castleX + 36, clampedHorizon - 54);
+      ctx.closePath();
+      ctx.fill();
+      // 歐風木質半木結構線條
+      ctx.strokeStyle = '#2c3e50';
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(castleX, clampedHorizon - 54, 46, 32);
+
+      // 湖畔成排金紅與翠綠落羽松林
+      for (let p = 0; p < 18; p++) {
+        const px = ((p * 48 + nearShift * 0.2) % (width + 60)) - 30;
+        const ph = 26 + (p % 4) * 8;
+        const col = (p % 2 === 0) ? '#d35400' : '#27ae60';
+        ctx.fillStyle = col;
+        ctx.beginPath();
+        ctx.moveTo(px, clampedHorizon - 22);
+        ctx.lineTo(px + 7, clampedHorizon - 22 - ph);
+        ctx.lineTo(px + 14, clampedHorizon - 22);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      // Tiffany 藍牛奶夢幻湖水域
+      const lakeGrad = ctx.createLinearGradient(0, clampedHorizon - 22, 0, clampedHorizon);
+      lakeGrad.addColorStop(0, '#00cec9');
+      lakeGrad.addColorStop(0.55, '#81ecec');
+      lakeGrad.addColorStop(1, '#0984e3');
+      ctx.fillStyle = lakeGrad;
+      ctx.fillRect(0, clampedHorizon - 22, width, 22);
+
+      // 湖中落羽松跳石步道與波光倒影
+      for (let s = 0; s < 12; s++) {
+        const sx = width * 0.12 + s * (width * 0.065);
+        ctx.fillStyle = '#636e72';
+        ctx.fillRect(sx, clampedHorizon - 14, 18, 6);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.65)';
+        ctx.fillRect(sx + 2, clampedHorizon - 14, 14, 2);
+      }
+      return;
+    }
+
+    if (hTheme === 'jialulan_pacific') {
+      // 【台東加路蘭海岸・小野柳與浩瀚太平洋】
+      // 漸層太平洋湛藍海面
+      const seaGrad = ctx.createLinearGradient(0, clampedHorizon - 36, 0, clampedHorizon);
+      seaGrad.addColorStop(0, '#003d66');
+      seaGrad.addColorStop(0.5, '#0077b6');
+      seaGrad.addColorStop(1, '#00b4d8');
+      ctx.fillStyle = seaGrad;
+      ctx.fillRect(0, clampedHorizon - 36, width, 36);
+
+      // 遠方綠島朦朧剪影
+      ctx.fillStyle = 'rgba(74, 105, 189, 0.45)';
+      ctx.beginPath();
+      ctx.ellipse(width * 0.78, clampedHorizon - 34, 46, 8, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      // 海面碎浪波光
+      for (let w = 0; w < 6; w++) {
+        const wy = clampedHorizon - 30 + w * 4;
+        const waveX = ((w * 90 + now * 0.02) % (width + 80)) - 40;
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+        ctx.fillRect(waveX, wy, 44, 2);
+      }
+
+      // 加路蘭起伏的綠茵海濱大草原台地
+      ctx.fillStyle = '#2ecc71';
+      ctx.beginPath();
+      ctx.moveTo(0, clampedHorizon);
+      ctx.lineTo(0, clampedHorizon - 18);
+      ctx.quadraticCurveTo(width * 0.35, clampedHorizon - 32, width * 0.65, clampedHorizon - 16);
+      ctx.quadraticCurveTo(width * 0.85, clampedHorizon - 8, width, clampedHorizon - 20);
+      ctx.lineTo(width, clampedHorizon);
+      ctx.closePath();
+      ctx.fill();
+
+      // 小野柳黑褐色豆腐岩與單面山海蝕礁石
+      ctx.fillStyle = '#3d3d3d';
+      for (let r = 0; r < 5; r++) {
+        const rx = width * 0.08 + r * 38;
+        ctx.fillRect(rx, clampedHorizon - 16, 26, 12);
+        ctx.strokeStyle = '#555555';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(rx, clampedHorizon - 16, 26, 12);
+      }
+
+      // 原住民漂流木裝置「哭泣的露珠」巨型波浪藝術剪影
+      const artX = width * 0.48;
+      ctx.strokeStyle = '#834c24';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.arc(artX, clampedHorizon - 22, 18, Math.PI * 0.8, Math.PI * 2.2);
+      ctx.stroke();
+      ctx.fillStyle = '#d35400';
+      ctx.fillRect(artX - 8, clampedHorizon - 26, 16, 8);
+      return;
+    }
+
+    if (hTheme === 'nanwan_beach') {
+      // 【屏東墾丁南灣遊憩區・熱帶沙灘與白色大風車】
+      // 碧藍熱帶海洋
+      const seaGrad = ctx.createLinearGradient(0, clampedHorizon - 38, 0, clampedHorizon);
+      seaGrad.addColorStop(0, '#006266');
+      seaGrad.addColorStop(0.5, '#009432');
+      seaGrad.addColorStop(1, '#12cbc4');
+      ctx.fillStyle = seaGrad;
+      ctx.fillRect(0, clampedHorizon - 38, width, 38);
+
+      // 海灣白浪拍岸
+      for (let w = 0; w < 6; w++) {
+        const wy = clampedHorizon - 24 + w * 3;
+        const waveX = ((w * 80 + now * 0.03) % (width + 60)) - 30;
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+        ctx.fillRect(waveX, wy, 38, 2);
+      }
+
+      // 台電核三廠白色巨型風力發電機組（大風車）
+      const windAngle = now * 0.002;
+      [width * 0.22, width * 0.32, width * 0.42].forEach((wx, idx) => {
+        const wy = clampedHorizon - 38;
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(wx, wy + 26);
+        ctx.lineTo(wx, wy);
+        ctx.stroke();
+        // 旋轉風車三葉片
+        for (let b = 0; b < 3; b++) {
+          const ang = windAngle + (b * Math.PI * 2 / 3) + idx * 0.5;
+          ctx.beginPath();
+          ctx.moveTo(wx, wy);
+          ctx.lineTo(wx + Math.cos(ang) * 14, wy + Math.sin(ang) * 14);
+          ctx.stroke();
+        }
+      });
+
+      // 南灣半月形金黃金沙灘
+      ctx.fillStyle = '#f6b93b';
+      ctx.beginPath();
+      ctx.moveTo(0, clampedHorizon);
+      ctx.lineTo(0, clampedHorizon - 14);
+      ctx.quadraticCurveTo(width * 0.5, clampedHorizon - 22, width, clampedHorizon - 12);
+      ctx.lineTo(width, clampedHorizon);
+      ctx.closePath();
+      ctx.fill();
+
+      // 沙灘成排五彩遮陽傘
+      const umbrellaColors = ['#eb2f06', '#f6b93b', '#00cec9', '#e056fd', '#4cd137'];
+      for (let u = 0; u < 8; u++) {
+        const ux = width * 0.52 + u * 24;
+        const uy = clampedHorizon - 16 + (u % 2) * 3;
+        ctx.fillStyle = umbrellaColors[u % umbrellaColors.length];
+        ctx.beginPath();
+        ctx.arc(ux, uy, 7, Math.PI, 0);
+        ctx.closePath();
+        ctx.fill();
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.strokeStyle = '#2d3436';
+        ctx.beginPath();
+        ctx.moveTo(ux, uy);
+        ctx.lineTo(ux, uy + 7);
+        ctx.stroke();
+      }
+      return;
+    }
+
+    if (hTheme === 'anping_fort') {
+      // 【台南安平古堡・熱蘭遮城稜堡與港灣夕照】
+      // 安平港水面夕照金波
+      const harborGrad = ctx.createLinearGradient(0, clampedHorizon - 32, 0, clampedHorizon);
+      harborGrad.addColorStop(0, '#e17055');
+      harborGrad.addColorStop(0.6, '#e15f41');
+      harborGrad.addColorStop(1, '#574b90');
+      ctx.fillStyle = harborGrad;
+      ctx.fillRect(0, clampedHorizon - 32, width, 32);
+
+      // 遠方安平港出海口與防波堤
+      ctx.fillStyle = '#2f3542';
+      ctx.fillRect(width * 0.65, clampedHorizon - 18, width * 0.35, 18);
+
+      // 熱蘭遮城厚實荷蘭紅磚城垣
+      const fortX = width * 0.18;
+      ctx.fillStyle = '#8e281c';
+      ctx.fillRect(fortX, clampedHorizon - 44, 96, 44);
+      // 紅磚垛牆
+      for (let m = 0; m < 5; m++) {
+        ctx.fillStyle = '#b03a2e';
+        ctx.fillRect(fortX + m * 20, clampedHorizon - 48, 14, 6);
+      }
+
+      // 安平古堡標誌性純白尖頂圓拱瞭望台
+      const towerX = fortX + 48;
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(towerX - 12, clampedHorizon - 74, 24, 30);
+      ctx.strokeStyle = '#111111';
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(towerX - 12, clampedHorizon - 74, 24, 30);
+      // 瞭望塔觀景窗
+      ctx.fillStyle = '#2c3e50';
+      ctx.fillRect(towerX - 8, clampedHorizon - 68, 16, 8);
+      // 尖頂紅色四角屋頂
+      ctx.fillStyle = '#c0392b';
+      ctx.beginPath();
+      ctx.moveTo(towerX - 16, clampedHorizon - 74);
+      ctx.lineTo(towerX, clampedHorizon - 92);
+      ctx.lineTo(towerX + 16, clampedHorizon - 74);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+
+      // 億載金城黑鐵萬歲大砲剪影
+      ctx.fillStyle = '#1e272e';
+      ctx.fillRect(fortX + 68, clampedHorizon - 22, 18, 6);
+      ctx.beginPath();
+      ctx.arc(fortX + 76, clampedHorizon - 16, 5, 0, Math.PI * 2);
+      ctx.fill();
+      return;
+    }
+
     // 預設三層次台灣壯麗山脈、山谷雲霧與田園水波天際線
     // 第一層：遠方高山稜線 (玉山/中央山脈剪影)
     ctx.fillStyle = stageTheme.mountainFar || stageTheme.mountainColor;
@@ -5447,6 +5772,147 @@ class SpriteRenderer {
       ctx.closePath();
       ctx.fill();
       ctx.stroke();
+    } else if (stageId === 'meishan') {
+      // 【嘉義梅山三十六彎＆太平雲梯實景】高山茶園梯田 + 翻騰雲海 + 橫跨兩峰白色太平雲梯吊橋與黃色主塔
+      ctx.fillStyle = '#ecf0f1';
+      ctx.fillRect(x, y + h * 0.62, w, h * 0.38);
+      ctx.fillStyle = '#1e824c';
+      ctx.beginPath();
+      ctx.moveTo(x, y + h);
+      ctx.lineTo(x, y + h * 0.48);
+      ctx.lineTo(x + w * 0.35, y + h * 0.32);
+      ctx.lineTo(x + w * 0.65, y + h * 0.52);
+      ctx.lineTo(x + w, y + h * 0.28);
+      ctx.lineTo(x + w, y + h);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = '#f39c12';
+      ctx.fillRect(x + w * 0.26, y + h * 0.18, w * 0.08, h * 0.50);
+      ctx.strokeRect(x + w * 0.26, y + h * 0.18, w * 0.08, h * 0.50);
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(x + w * 0.10, y + h * 0.52);
+      ctx.quadraticCurveTo(x + w * 0.55, y + h * 0.62, x + w * 0.90, y + h * 0.46);
+      ctx.stroke();
+      ctx.strokeStyle = '#111111';
+      ctx.lineWidth = 1;
+    } else if (stageId === 'yunshanshui') {
+      // 【花蓮壽豐雲山水夢幻湖實景】Tiffany藍牛奶湖 + 落羽松倒影 + 歐風石造尖頂古堡與跳石步道
+      ctx.fillStyle = '#00cec9';
+      ctx.fillRect(x, y + h * 0.56, w, h * 0.44);
+      ctx.fillStyle = '#dfe6e9';
+      ctx.fillRect(x + w * 0.62, y + h * 0.30, w * 0.32, h * 0.36);
+      ctx.strokeRect(x + w * 0.62, y + h * 0.30, w * 0.32, h * 0.36);
+      ctx.fillStyle = '#c0392b';
+      ctx.beginPath();
+      ctx.moveTo(x + w * 0.58, y + h * 0.30);
+      ctx.lineTo(x + w * 0.78, y + h * 0.12);
+      ctx.lineTo(x + w * 0.98, y + h * 0.30);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      [0.08, 0.22, 0.36, 0.48].forEach((lx, idx) => {
+        ctx.fillStyle = (idx % 2 === 0) ? '#d35400' : '#27ae60';
+        ctx.beginPath();
+        ctx.moveTo(x + w * (lx - 0.06), y + h * 0.65);
+        ctx.lineTo(x + w * lx, y + h * 0.22);
+        ctx.lineTo(x + w * (lx + 0.06), y + h * 0.65);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+      });
+      ctx.fillStyle = '#636e72';
+      for (let s = 0; s < 5; s++) {
+        ctx.fillRect(x + w * (0.08 + s * 0.10), y + h * 0.76, w * 0.07, h * 0.08);
+      }
+    } else if (stageId === 'jialulan') {
+      // 【台東加路蘭海岸＆小野柳實景】湛藍太平洋白浪 + 起伏綠茵大草原 + 原民巨型漂流木「哭泣的露珠」與豆腐岩
+      ctx.fillStyle = '#0984e3';
+      ctx.fillRect(x, y + h * 0.44, w, h * 0.56);
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(x + w * 0.10, y + h * 0.52, w * 0.80, h * 0.04);
+      ctx.fillStyle = '#2ecc71';
+      ctx.beginPath();
+      ctx.moveTo(x, y + h);
+      ctx.lineTo(x, y + h * 0.64);
+      ctx.quadraticCurveTo(x + w * 0.45, y + h * 0.54, x + w, y + h * 0.68);
+      ctx.lineTo(x + w, y + h);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.strokeStyle = '#834c24';
+      ctx.lineWidth = Math.max(2, w * 0.035);
+      ctx.beginPath();
+      ctx.arc(x + w * 0.42, y + h * 0.52, w * 0.14, Math.PI * 0.8, Math.PI * 2.2);
+      ctx.stroke();
+      ctx.fillStyle = '#2d3436';
+      for (let r = 0; r < 4; r++) {
+        ctx.fillRect(x + w * (0.64 + r * 0.08), y + h * 0.74, w * 0.07, h * 0.16);
+        ctx.strokeRect(x + w * (0.64 + r * 0.08), y + h * 0.74, w * 0.07, h * 0.16);
+      }
+    } else if (stageId === 'nanwan') {
+      // 【屏東墾丁南灣遊憩區實景】碧藍海域 + 金黃沙灘 + 五彩遮陽傘 + 白色巨型大風車
+      ctx.fillStyle = '#00b894';
+      ctx.fillRect(x, y + h * 0.46, w, h * 0.54);
+      ctx.fillStyle = '#f1c40f';
+      ctx.beginPath();
+      ctx.moveTo(x, y + h);
+      ctx.lineTo(x, y + h * 0.68);
+      ctx.quadraticCurveTo(x + w * 0.50, y + h * 0.60, x + w, y + h * 0.72);
+      ctx.lineTo(x + w, y + h);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(x + w * 0.22, y + h * 0.56);
+      ctx.lineTo(x + w * 0.22, y + h * 0.24);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(x + w * 0.14, y + h * 0.20);
+      ctx.lineTo(x + w * 0.30, y + h * 0.28);
+      ctx.moveTo(x + w * 0.22, y + h * 0.24);
+      ctx.lineTo(x + w * 0.22, y + h * 0.10);
+      ctx.stroke();
+      const uColors = ['#e74c3c', '#0984e3', '#9b59b6'];
+      uColors.forEach((uc, idx) => {
+        const ux = x + w * (0.50 + idx * 0.16);
+        const uy = y + h * 0.66;
+        ctx.fillStyle = uc;
+        ctx.beginPath();
+        ctx.arc(ux, uy, w * 0.07, Math.PI, 0);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+      });
+    } else if (stageId === 'anping') {
+      // 【台南安平古堡＆億載金城實景】1624荷蘭紅磚稜堡城牆 + 純白八角瞭望台紅尖頂 + 億載金城黑鐵萬歲古砲
+      ctx.fillStyle = '#0984e3';
+      ctx.fillRect(x, y + h * 0.78, w, h * 0.22);
+      ctx.fillStyle = '#8e281c';
+      ctx.fillRect(x + w * 0.10, y + h * 0.50, w * 0.80, h * 0.32);
+      ctx.strokeRect(x + w * 0.10, y + h * 0.50, w * 0.80, h * 0.32);
+      ctx.fillStyle = '#b03a2e';
+      for (let m = 0; m < 5; m++) {
+        ctx.fillRect(x + w * (0.12 + m * 0.16), y + h * 0.44, w * 0.09, h * 0.08);
+      }
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(x + w * 0.40, y + h * 0.18, w * 0.20, h * 0.32);
+      ctx.strokeRect(x + w * 0.40, y + h * 0.18, w * 0.20, h * 0.32);
+      ctx.fillStyle = '#c0392b';
+      ctx.beginPath();
+      ctx.moveTo(x + w * 0.35, y + h * 0.18);
+      ctx.lineTo(x + w * 0.50, y + h * 0.06);
+      ctx.lineTo(x + w * 0.65, y + h * 0.18);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = '#1e272e';
+      ctx.fillRect(x + w * 0.70, y + h * 0.46, w * 0.14, h * 0.06);
+      ctx.strokeRect(x + w * 0.70, y + h * 0.46, w * 0.14, h * 0.06);
     } else {
       // 【鵝鑾鼻武裝燈塔與南國椰林海岸實景】巴士海峽碧海 + 翠綠椰林草原 + 純白圓柱燈塔與旋轉金色光束
       ctx.fillStyle = '#0077b6';
@@ -6031,6 +6497,157 @@ class SpriteRenderer {
       ctx.closePath();
       ctx.fill();
       ctx.stroke();
+    } else if (textInfo.includes('太平雲梯') || textInfo.includes('三十六彎')) {
+      // 【嘉義梅山・太平雲梯景觀吊橋與36彎標誌】白色高聳吊橋塔門 + 懸空斜張鋼索 + 亮黃防護網 + 髮夾彎標誌
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(px + pw * 0.18, py + ph * 0.12, pw * 0.12, ph * 0.88);
+      ctx.strokeRect(px + pw * 0.18, py + ph * 0.12, pw * 0.12, ph * 0.88);
+      ctx.fillRect(px + pw * 0.70, py + ph * 0.12, pw * 0.12, ph * 0.88);
+      ctx.strokeRect(px + pw * 0.70, py + ph * 0.12, pw * 0.12, ph * 0.88);
+      ctx.fillRect(px + pw * 0.15, py + ph * 0.10, pw * 0.70, ph * 0.08);
+      ctx.strokeRect(px + pw * 0.15, py + ph * 0.10, pw * 0.70, ph * 0.08);
+      ctx.fillStyle = '#f1c40f';
+      ctx.fillRect(px + pw * 0.04, py + ph * 0.58, pw * 0.92, ph * 0.08);
+      ctx.strokeRect(px + pw * 0.04, py + ph * 0.58, pw * 0.92, ph * 0.08);
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = Math.max(1.5, pw * 0.02);
+      ctx.beginPath();
+      ctx.moveTo(px + pw * 0.05, py + ph * 0.58);
+      ctx.quadraticCurveTo(screenX, py + ph * 0.72, px + pw * 0.95, py + ph * 0.58);
+      ctx.stroke();
+      ctx.fillStyle = '#e74c3c';
+      ctx.fillRect(screenX - pw * 0.18, py + ph * 0.70, pw * 0.36, ph * 0.16);
+      ctx.strokeRect(screenX - pw * 0.18, py + ph * 0.70, pw * 0.36, ph * 0.16);
+      this.drawArcadeText(ctx, '36彎', screenX, py + ph * 0.80, '900 13px sans-serif', '#ffffff', 'center', 1.5);
+    } else if (textInfo.includes('落羽松') || textInfo.includes('都鐸') || textInfo.includes('跳石') || textInfo.includes('雲山水')) {
+      // 【花蓮壽豐・雲山水跳石步道與歐風都鐸城堡】湖畔落羽松立體羽狀樹冠 + Tiffany藍湖水 + 灰色跳石步道 + 歐風石造尖頂城堡
+      ctx.fillStyle = '#ecf0f1';
+      ctx.fillRect(px + pw * 0.45, py + ph * 0.22, pw * 0.48, ph * 0.56);
+      ctx.strokeRect(px + pw * 0.45, py + ph * 0.22, pw * 0.48, ph * 0.56);
+      ctx.fillStyle = '#c0392b';
+      ctx.beginPath();
+      ctx.moveTo(px + pw * 0.42, py + ph * 0.22);
+      ctx.lineTo(px + pw * 0.69, py + ph * 0.04);
+      ctx.lineTo(px + pw * 0.96, py + ph * 0.22);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.strokeStyle = '#2c3e50';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(px + pw * 0.45, py + ph * 0.22, pw * 0.48, ph * 0.56);
+      ctx.fillStyle = '#00cec9';
+      ctx.fillRect(px + pw * 0.04, py + ph * 0.72, pw * 0.92, ph * 0.28);
+      for (let s = 0; s < 4; s++) {
+        const sx = px + pw * (0.12 + s * 0.22);
+        ctx.fillStyle = '#7f8c8d';
+        ctx.fillRect(sx, py + ph * 0.78, pw * 0.14, ph * 0.14);
+        ctx.strokeRect(sx, py + ph * 0.78, pw * 0.14, ph * 0.14);
+        ctx.fillStyle = '#ecf0f1';
+        ctx.fillRect(sx + 2, py + ph * 0.78, pw * 0.14 - 4, 3);
+      }
+      ctx.fillStyle = '#5d4037';
+      ctx.fillRect(px + pw * 0.16, py + ph * 0.18, pw * 0.08, ph * 0.64);
+      [-0.14, -0.06, 0.02].forEach((ty, idx) => {
+        ctx.fillStyle = (idx % 2 === 0) ? '#d35400' : '#e67e22';
+        ctx.beginPath();
+        ctx.moveTo(px + pw * 0.04, py + ph * (0.42 + ty));
+        ctx.lineTo(px + pw * 0.20, py + ph * (0.12 + ty));
+        ctx.lineTo(px + pw * 0.36, py + ph * (0.42 + ty));
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+      });
+    } else if (textInfo.includes('哭泣的露珠') || textInfo.includes('漂流木') || textInfo.includes('加路蘭') || textInfo.includes('小野柳') || textInfo.includes('豆腐岩')) {
+      // 【台東加路蘭・哭泣的露珠漂流木裝置與小野柳豆腐岩】原民大弧形漂流木圓拱 + 綠茵草皮 + 豆腐岩海蝕方塊
+      ctx.fillStyle = '#2ecc71';
+      ctx.fillRect(px + pw * 0.04, py + ph * 0.74, pw * 0.92, ph * 0.26);
+      ctx.strokeRect(px + pw * 0.04, py + ph * 0.74, pw * 0.92, ph * 0.26);
+      ctx.fillStyle = '#34495e';
+      for (let r = 0; r < 3; r++) {
+        for (let c = 0; c < 2; c++) {
+          ctx.fillRect(px + pw * (0.58 + r * 0.13), py + ph * (0.76 + c * 0.11), pw * 0.11, ph * 0.09);
+          ctx.strokeRect(px + pw * (0.58 + r * 0.13), py + ph * (0.76 + c * 0.11), pw * 0.11, ph * 0.09);
+        }
+      }
+      ctx.strokeStyle = '#795548';
+      ctx.lineWidth = Math.max(3, pw * 0.038);
+      ctx.beginPath();
+      ctx.arc(px + pw * 0.35, py + ph * 0.50, pw * 0.24, Math.PI * 0.75, Math.PI * 2.25);
+      ctx.stroke();
+      ctx.strokeStyle = '#a1887f';
+      ctx.lineWidth = Math.max(2, pw * 0.024);
+      ctx.beginPath();
+      ctx.arc(px + pw * 0.35, py + ph * 0.50, pw * 0.16, Math.PI * 0.75, Math.PI * 2.25);
+      ctx.stroke();
+      ctx.fillStyle = '#d35400';
+      ctx.fillRect(px + pw * 0.28, py + ph * 0.44, pw * 0.14, ph * 0.12);
+      ctx.strokeRect(px + pw * 0.28, py + ph * 0.44, pw * 0.14, ph * 0.12);
+    } else if (textInfo.includes('南灣') || textInfo.includes('遮陽傘') || textInfo.includes('白沙灣') || textInfo.includes('水上摩托車')) {
+      // 【屏東墾丁南灣・熱帶沙灘五彩遮陽傘與水上摩托車】金黃細沙灘 + 彩色條紋陽傘群 + 白色大風車
+      ctx.fillStyle = '#f1c40f';
+      ctx.fillRect(px + pw * 0.04, py + ph * 0.65, pw * 0.92, ph * 0.35);
+      ctx.strokeRect(px + pw * 0.04, py + ph * 0.65, pw * 0.92, ph * 0.35);
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(px + pw * 0.22, py + ph * 0.65);
+      ctx.lineTo(px + pw * 0.22, py + ph * 0.16);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(px + pw * 0.22, py + ph * 0.16, pw * 0.03, 0, Math.PI * 2);
+      ctx.stroke();
+      for (let b = 0; b < 3; b++) {
+        const ang = (time * 0.6) + (b * Math.PI * 2 / 3);
+        ctx.beginPath();
+        ctx.moveTo(px + pw * 0.22, py + ph * 0.16);
+        ctx.lineTo(px + pw * 0.22 + Math.cos(ang) * pw * 0.14, py + ph * 0.16 + Math.sin(ang) * pw * 0.14);
+        ctx.stroke();
+      }
+      const uColors = ['#e74c3c', '#0984e3', '#2ecc71'];
+      uColors.forEach((col, idx) => {
+        const ux = px + pw * (0.42 + idx * 0.24);
+        const uy = py + ph * (0.48 + (idx % 2) * 0.08);
+        ctx.fillStyle = col;
+        ctx.beginPath();
+        ctx.arc(ux, uy, pw * 0.12, Math.PI, 0);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+        ctx.strokeStyle = '#2c3e50';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(ux, uy);
+        ctx.lineTo(ux, uy + ph * 0.22);
+        ctx.stroke();
+      });
+    } else if (textInfo.includes('億載金城') || textInfo.includes('八角稜堡') || textInfo.includes('阿姆斯壯') || textInfo.includes('大魚的祝福')) {
+      // 【台南安平・億載金城八角稜堡阿姆斯壯古砲與大魚的祝福】紅磚外廓八角稜堡 + 清代黑鐵萬歲巨砲
+      ctx.fillStyle = '#8e281c';
+      ctx.fillRect(px + pw * 0.08, py + ph * 0.54, pw * 0.84, ph * 0.46);
+      ctx.strokeRect(px + pw * 0.08, py + ph * 0.54, pw * 0.84, ph * 0.46);
+      ctx.fillStyle = '#b03a2e';
+      ctx.fillRect(px + pw * 0.14, py + ph * 0.42, pw * 0.72, ph * 0.16);
+      ctx.strokeRect(px + pw * 0.14, py + ph * 0.42, pw * 0.72, ph * 0.16);
+      ctx.fillStyle = '#1e272e';
+      ctx.fillRect(px + pw * 0.22, py + ph * 0.32, pw * 0.52, ph * 0.12);
+      ctx.strokeRect(px + pw * 0.22, py + ph * 0.32, pw * 0.52, ph * 0.12);
+      ctx.fillStyle = '#34495e';
+      ctx.beginPath();
+      ctx.arc(px + pw * 0.34, py + ph * 0.44, pw * 0.08, 0, Math.PI * 2);
+      ctx.arc(px + pw * 0.62, py + ph * 0.44, pw * 0.08, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillStyle = '#2c3e50';
+      ctx.beginPath();
+      ctx.arc(screenX, py + ph * 0.72, pw * 0.10, Math.PI, 0);
+      ctx.lineTo(screenX + pw * 0.10, py + ph);
+      ctx.lineTo(screenX - pw * 0.10, py + ph);
+      ctx.closePath();
+      ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(screenX - pw * 0.14, py + ph * 0.58, pw * 0.28, ph * 0.08);
+      ctx.strokeRect(screenX - pw * 0.14, py + ph * 0.58, pw * 0.28, ph * 0.08);
+      this.drawArcadeText(ctx, '萬歲砲', screenX, py + ph * 0.64, '900 11px sans-serif', '#8e281c', 'center', 1);
     } else if (textInfo.includes('林百貨') || textInfo.includes('五層樓仔')) {
       // 【1932 台南林百貨（五層樓仔）真實構圖】五層樓黃褐色溝面磚立面 + 轉角八角圓塔 + 圓形牛眼窗 + 一樓拱廊亭仔腳 + 頂樓神社鳥居！
       // 五層樓主體（黃褐色溝面磚）
