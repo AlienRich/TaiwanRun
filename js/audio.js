@@ -13,6 +13,9 @@ class ArcadeAudio {
     this.bgmAudio = null;
     this.bgmBaseVolume = 0.52;
     this.bgmDuckTimer = null;
+    this.offRoadGain = null;
+    this.offRoadFilter = null;
+    this.offRoadNoise = null;
     this.setupBgmElement();
   }
 
@@ -125,6 +128,58 @@ class ArcadeAudio {
         sSource.start(0);
       } catch (_) {}
     }
+
+    // 建立輪胎駛入非道路（泥沙地 / 碎石草皮）的連續顆粒沙石摩擦音效節點
+    try {
+      const sampleRate = this.ctx.sampleRate || 44100;
+      const noiseSec = 1.0;
+      const noiseSamples = Math.floor(sampleRate * noiseSec);
+      const noiseBuf = this.ctx.createBuffer(1, noiseSamples, sampleRate);
+      const nData = noiseBuf.getChannelData(0);
+      let lastOut = 0.0;
+      for (let i = 0; i < noiseSamples; i++) {
+        const white = Math.random() * 2 - 1;
+        lastOut = (lastOut + 0.025 * white) / 1.025;
+        const pebble = (Math.random() < 0.035) ? (Math.random() * 2 - 1) * 0.45 : 0;
+        nData[i] = lastOut * 3.4 + pebble;
+      }
+
+      this.offRoadNoise = this.ctx.createBufferSource();
+      this.offRoadNoise.buffer = noiseBuf;
+      this.offRoadNoise.loop = true;
+
+      this.offRoadFilter = this.ctx.createBiquadFilter();
+      this.offRoadFilter.type = 'lowpass';
+      this.offRoadFilter.frequency.value = 340;
+      this.offRoadFilter.Q.value = 1.8;
+
+      this.offRoadGain = this.ctx.createGain();
+      this.offRoadGain.gain.value = 0.0;
+
+      this.offRoadNoise.connect(this.offRoadFilter);
+      this.offRoadFilter.connect(this.offRoadGain);
+      this.offRoadGain.connect(this.ctx.destination);
+      this.offRoadNoise.start(0);
+    } catch (_) {}
+  }
+
+  /**
+   * 輪胎開到兩側非道路（草地、泥土、沙灘）時的連續沙石摩擦回饋音效
+   */
+  updateOffRoad(isOffRoad, speedKmh = 0) {
+    if (!this.isInitialized || !this.enabled || !this.offRoadGain || !this.ctx) return;
+    const now = this.ctx.currentTime;
+    if (isOffRoad && speedKmh > 10) {
+      const speedFactor = Math.min(1.2, speedKmh / 150);
+      const targetGain = 0.06 + speedFactor * 0.12;
+      const targetFreq = 260 + speedFactor * 320;
+      this.offRoadGain.gain.setTargetAtTime(targetGain, now, 0.03);
+      if (this.offRoadFilter) {
+        this.offRoadFilter.frequency.setTargetAtTime(targetFreq, now, 0.03);
+      }
+    } else {
+      this.offRoadGain.gain.setTargetAtTime(0.0, now, 0.05);
+    }
   }
 
   /**
@@ -209,8 +264,13 @@ class ArcadeAudio {
   }
 
   stopEngine() {
-    if (!this.isInitialized || !this.engineGain || !this.ctx) return;
-    this.engineGain.gain.setTargetAtTime(0, this.ctx.currentTime, 0.05);
+    if (!this.isInitialized || !this.ctx) return;
+    if (this.engineGain) {
+      this.engineGain.gain.setTargetAtTime(0, this.ctx.currentTime, 0.05);
+    }
+    if (this.offRoadGain) {
+      this.offRoadGain.gain.setTargetAtTime(0, this.ctx.currentTime, 0.05);
+    }
   }
 
   playTone(freq, duration = 0.12, type = 'square', volume = 0.13, slideTo = null, pan = 0.0) {

@@ -667,9 +667,6 @@ class Pseudo3DRoad {
     if (window.arcadeAudio) {
       window.arcadeAudio.playPoliceDispatchSiren();
     }
-    if (typeof onBanner === 'function') {
-      onBanner('🚨 累計肇事 5 次！國道警車【紅斑馬】從後方鳴笛追上攔截（共 3 次急煞撞擊，快變換車道閃避！）');
-    }
   }
 
   updatePoliceChase(dt, player, onBanner) {
@@ -702,9 +699,6 @@ class Pseudo3DRoad {
         if (window.arcadeAudio) {
           window.arcadeAudio.playPoliceBrakeScreech();
         }
-        if (typeof onBanner === 'function') {
-          onBanner(`🚨 紅斑馬在前方遠處急煞攔截 (${pc.attemptsDone + 1}/${pc.maxAttempts})！快按 ◀ ▶ 偏移車道閃避！`);
-        }
       }
     } else if (pc.phase === 'BRAKE_CHECK') {
       // 階段 3：紅斑馬從更前方遠處重踩煞車減速，由遠到近急速向後迎面逼近撞向玩家車頭！
@@ -729,18 +723,12 @@ class Pseudo3DRoad {
           if (window.arcadeAudio) {
             window.arcadeAudio.playPoliceRamHit();
           }
-          if (typeof onBanner === 'function') {
-            onBanner(`💥 遭【國道紅斑馬】第 ${pc.attemptsDone}/${pc.maxAttempts} 次減速撞擊命中！車速 -30%！`);
-          }
         } else {
           // 玩家偏移車道成功躲開！
           player.pickupPopupText = `✨ 漂亮閃過紅斑馬第 ${pc.attemptsDone}/3 次急煞攔截！`;
           player.pickupPopupTimer = 1.6;
           if (window.arcadeAudio) {
             window.arcadeAudio.playForkSelect();
-          }
-          if (typeof onBanner === 'function') {
-            onBanner(`✨ 帥氣變換車道！成功閃避紅斑馬第 ${pc.attemptsDone}/${pc.maxAttempts} 次攔截！`);
           }
         }
 
@@ -768,9 +756,6 @@ class Pseudo3DRoad {
       if (pc.phaseTimer >= 1.6) {
         pc.active = false;
         pc.phase = 'IDLE';
-        if (typeof onBanner === 'function') {
-          onBanner('🚓 國道紅斑馬完成 3 次攔截勤務加速駛離！請注意行車安全！');
-        }
       }
     }
   }

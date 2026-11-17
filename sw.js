@@ -2,7 +2,7 @@
  * 台灣瘋狂大賽車 TaiwanRun - 現代 PWA 離線 Service Worker
  * 策略：Stale-While-Revalidate（即開即玩，背景更新，100% 離線遊玩）
  */
-const CACHE_NAME = 'taiwanrun-v6.3';
+const CACHE_NAME = 'taiwanrun-v6.4';
 
 const PRECACHE_ASSETS = [
   './',

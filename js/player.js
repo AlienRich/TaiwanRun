@@ -134,6 +134,7 @@ class PlayerVehicle {
 
     this.steer = 0;
     this.isBraking = false;
+    this.isOffRoad = false;
     this.nitroTimer = 0;
     this.nitroCooldown = 0;
     this.nitroCooldownMax = 3.6;
@@ -436,14 +437,39 @@ class PlayerVehicle {
     const roadEdge = inFork ? 0.88 : 1.06;
     const maxClamp = inFork ? 2.55 : 1.85;
 
-    if (distFromBranchCenter > roadEdge && this.speed > this.offRoadLimit && this.nitroTimer <= 0) {
-      this.speed = Math.max(this.offRoadLimit, this.speed + this.offRoadDecel * dt);
+    // 開到兩旁非道路的範圍：時速每秒降速 10%，一路降到 50KM
+    if (distFromBranchCenter > roadEdge) {
+      this.isOffRoad = true;
+      const offRoadFloorSpeed = Math.round((50 / 293) * 16800); // 50 KM/h 對應內部速度 ≈ 2867
+      if (this.nitroTimer <= 0) {
+        if (this.speed > offRoadFloorSpeed) {
+          // 每秒降速 10%
+          this.speed = Math.max(offRoadFloorSpeed, this.speed * Math.pow(0.90, dt));
+        } else {
+          this.speed = Math.min(offRoadFloorSpeed, this.speed + this.accel * dt);
+        }
+      }
+    } else {
+      this.isOffRoad = false;
     }
 
     this.x = Math.max(-maxClamp, Math.min(maxClamp, this.x));
     this.z += this.speed * dt;
 
     const centerScreenX = (window.logicalCanvasWidth || 720) / 2;
+
+    // 駛入非道路泥沙地帶：輪胎兩側噴出泥土與碎石顆粒
+    if (this.isOffRoad && this.speed > 800 && Math.random() < 0.65) {
+      window.spriteRenderer.spawnParticle(
+        centerScreenX + (this.x > 0 ? 32 : -32) + (Math.random() - 0.5) * 20,
+        372,
+        (Math.random() - 0.5) * 55 - (this.x > 0 ? 30 : -30),
+        -15 - Math.random() * 25,
+        4,
+        Math.random() > 0.5 ? 'rgba(180, 142, 90, 0.75)' : 'rgba(120, 95, 60, 0.8)',
+        0.32
+      );
+    }
 
     // 變胖時底盤壓扁磨擦柏油路，持續噴出橘黃色底盤火花！
     if (this.isFatMode && this.speed > 2000 && Math.random() < 0.85) {
@@ -505,6 +531,9 @@ class PlayerVehicle {
         false,
         this.isFatMode
       );
+      if (typeof window.arcadeAudio.updateOffRoad === 'function') {
+        window.arcadeAudio.updateOffRoad(this.isOffRoad, this.getDisplayKmh());
+      }
     }
   }
 
