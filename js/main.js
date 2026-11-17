@@ -39,12 +39,22 @@
 
   window.addEventListener('resize', resizeCanvasToFullScreen);
   window.addEventListener('orientationchange', () => setTimeout(resizeCanvasToFullScreen, 120));
-  document.addEventListener('fullscreenchange', () => {
-    resizeCanvasToFullScreen();
+  function isFullscreenActive() {
+    return Boolean(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement);
+  }
+
+  function updateFullscreenBtnLabel() {
     const btnFs = document.getElementById('btn-fullscreen');
     if (btnFs) {
-      btnFs.textContent = document.fullscreenElement ? '🗗 退出全螢幕' : '⛶ 全螢幕放大';
+      btnFs.textContent = isFullscreenActive() ? '🗗 退出全螢幕' : '⛶ 全螢幕放大';
     }
+  }
+
+  ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'].forEach((ev) => {
+    document.addEventListener(ev, () => {
+      resizeCanvasToFullScreen();
+      updateFullscreenBtnLabel();
+    });
   });
   resizeCanvasToFullScreen();
 
@@ -549,10 +559,44 @@
     btnGarage.addEventListener('click', openGarage);
   }
 
-  const routeMapScreenEl = document.getElementById('route-map-screen');
+  const routeMapDialogEl = document.getElementById('route-map-dialog') || document.getElementById('route-map-screen');
   const routeMapContentEl = document.getElementById('route-map-content');
   const btnRouteMap = document.getElementById('btn-route-map');
   const btnCloseRouteMap = document.getElementById('btn-close-route-map');
+
+  function openRouteMapModal() {
+    renderFullRouteMapModal();
+    if (routeMapDialogEl) {
+      if (typeof routeMapDialogEl.showModal === 'function') {
+        try {
+          routeMapDialogEl.showModal();
+        } catch (_) {
+          routeMapDialogEl.classList.remove('hidden');
+        }
+      } else {
+        routeMapDialogEl.classList.remove('hidden');
+      }
+    }
+  }
+
+  function closeRouteMapModal() {
+    if (routeMapDialogEl) {
+      if (typeof routeMapDialogEl.close === 'function' && routeMapDialogEl.open) {
+        routeMapDialogEl.close();
+      } else {
+        routeMapDialogEl.classList.add('hidden');
+      }
+    }
+  }
+
+  if (routeMapDialogEl) {
+    // 現代 Web 彈窗最佳實踐：點擊背景陰影處自動關閉（Light Dismiss）
+    routeMapDialogEl.addEventListener('click', (e) => {
+      if (e.target === routeMapDialogEl) {
+        closeRouteMapModal();
+      }
+    });
+  }
 
   function renderFullRouteMapModal() {
     if (!routeMapContentEl) return;
@@ -612,8 +656,7 @@
     btnRouteMap.addEventListener('click', () => {
       window.arcadeAudio.init();
       window.arcadeAudio.playSelectBeep();
-      renderFullRouteMapModal();
-      if (routeMapScreenEl) routeMapScreenEl.classList.remove('hidden');
+      openRouteMapModal();
     });
   }
 
@@ -621,7 +664,7 @@
     btnCloseRouteMap.addEventListener('click', () => {
       window.arcadeAudio.init();
       window.arcadeAudio.playSelectBeep();
-      if (routeMapScreenEl) routeMapScreenEl.classList.add('hidden');
+      closeRouteMapModal();
     });
   }
 
@@ -653,14 +696,22 @@
       window.arcadeAudio.init();
       window.arcadeAudio.playSelectBeep();
       const docEl = document.documentElement;
-      if (!document.fullscreenElement) {
+      if (!isFullscreenActive()) {
         if (docEl.requestFullscreen) {
           docEl.requestFullscreen().catch(() => {});
         } else if (docEl.webkitRequestFullscreen) {
           docEl.webkitRequestFullscreen();
+        } else if (docEl.msRequestFullscreen) {
+          docEl.msRequestFullscreen();
         }
-      } else if (document.exitFullscreen) {
-        document.exitFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen().catch(() => {});
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+          document.msExitFullscreen();
+        }
       }
       setTimeout(resizeCanvasToFullScreen, 150);
     });

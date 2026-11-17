@@ -796,9 +796,15 @@ class Pseudo3DRoad {
 
       // 若車輛被玩家超越並離開畫面底端 (player.z + 760)，立即重設至前方遠處地平線，維持源源不絕「由遠到近」的車流視覺
       if (player && car.z < player.z + 760) {
+        if (!car.hasPassedSound && window.arcadeAudio && player.speed > 90) {
+          const pan = Math.max(-0.85, Math.min(0.85, (car.offset - player.x) * 1.4));
+          window.arcadeAudio.playPassBy(pan, false);
+          car.hasPassedSound = true;
+        }
         const respawnZ = player.z + 22000 + ((i * 2900) % 10000);
         if (respawnZ < maxZ) {
           car.z = respawnZ;
+          car.hasPassedSound = false;
         }
       }
       if (car.z >= maxZ) {

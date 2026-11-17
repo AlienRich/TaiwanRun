@@ -5,8 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#050408" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>TaiwanOutRun 台灣瘋狂大賽車 (全螢幕滿版 ‧ 15關5分鐘環島 ‧ 38中途景點 ‧ 5大天氣光影 ‧ 8大終點全景)</title>
-  <link rel="stylesheet" href="css/arcade.css?v=6.2" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="assets/icons/icon.svg" />
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
+  <link rel="stylesheet" href="css/arcade.css?v=6.3" />
 </head>
 <body>
   <div id="arcade-cabinet">
@@ -63,18 +68,18 @@
         </div>
       </div>
 
-      <!-- 全台 47 關完整路線圖總覽覆蓋層（1起點 ➔ 38隨機途經景點 ➔ 8大終點） -->
-      <div id="route-map-screen" class="overlay-screen hidden">
+      <!-- 全台 47 關完整路線圖總覽覆蓋層（現代原生 HTML5 <dialog> 頂層渲染） -->
+      <dialog id="route-map-dialog" class="route-map-dialog" aria-labelledby="route-map-title">
         <div class="overlay-card route-map-card">
           <div class="victory-top-row">
             <span class="pixel-badge">TAIWAN OUTRUN ‧ 全台環島完整路線圖（共47關卡 ‧ 282處沿途小景點 ‧ 5大天氣光影）</span>
-            <button id="btn-close-route-map" class="peek-panorama-btn">✖ 關閉路線圖</button>
+            <button id="btn-close-route-map" class="peek-panorama-btn" autofocus>✖ 關閉路線圖 (ESC)</button>
           </div>
-          <h2 class="victory-title">🗺️ 台灣瘋狂大賽車 <span>完整環島路線圖</span></h2>
+          <h2 id="route-map-title" class="victory-title">🗺️ 台灣瘋狂大賽車 <span>完整環島路線圖</span></h2>
           <div class="subtitle-tw">【第1關：富岡火車站 (20秒)】➔【第2~14關：38大景點由南至北13關 (各20秒)】➔【第15關：8大終點 (20秒) ＝ 全程 5 分鐘】</div>
           <div id="route-map-content" class="route-map-content"></div>
         </div>
-      </div>
+      </dialog>
 
       <!-- 開場選車車庫與 TIME OVER 覆蓋層 -->
       <div id="overlay-screen" class="overlay-screen">
@@ -132,13 +137,23 @@
     </footer>
   </div>
 
-  <script src="js/audio.js?v=6.1"></script>
-  <script src="js/stages_data.js?v=6.1"></script>
-  <script src="js/vehicle_sprites_data.js?v=6.1"></script>
-  <script src="js/sprites.js?v=6.1"></script>
-  <script src="js/road.js?v=6.1"></script>
-  <script src="js/player.js?v=6.1"></script>
-  <script src="js/collision.js?v=6.1"></script>
-  <script src="js/main.js?v=6.2"></script>
+  <script src="js/audio.js?v=6.3"></script>
+  <script src="js/stages_data.js?v=6.3"></script>
+  <script src="js/vehicle_sprites_data.js?v=6.3"></script>
+  <script src="js/sprites.js?v=6.3"></script>
+  <script src="js/road.js?v=6.3"></script>
+  <script src="js/player.js?v=6.3"></script>
+  <script src="js/collision.js?v=6.3"></script>
+  <script src="js/main.js?v=6.3"></script>
+  <script>
+    // 現代 Web PWA：註冊離線 Service Worker，實現秒開與 100% 離線遊玩
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch((err) => {
+          console.warn('[PWA] Service Worker registration failed:', err);
+        });
+      });
+    }
+  </script>
 </body>
 </html>

@@ -628,6 +628,36 @@ html, body {
   cursor: pointer;
 }
 
+/* 現代 Web 最佳實踐：原生 HTML5 <dialog> 樣式與 Top Layer 背景保護 */
+dialog.route-map-dialog {
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: auto;
+  max-width: 95vw;
+  max-height: 94dvh;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+dialog.route-map-dialog:not([open]) {
+  display: none;
+}
+
+dialog.route-map-dialog::backdrop {
+  background: rgba(5, 4, 10, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+dialog.route-map-dialog:modal {
+  overscroll-behavior: contain;
+}
+
 /* 完整路線圖覆蓋層 */
 .route-map-card {
   max-width: 780px;

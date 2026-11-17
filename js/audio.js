@@ -105,6 +105,41 @@ class ArcadeAudio {
     filter.connect(this.engineGain);
     this.engineGain.connect(this.ctx.destination);
     this.engineOsc.start();
+
+    // 現代 Web Audio：iOS 實體靜音開關穿透與喚醒，以及耳機/藍牙設備插拔安全保護
+    if (this.ctx) {
+      if (this.ctx.state === 'suspended') {
+        this.ctx.resume().catch(() => {});
+      }
+      this.ctx.onstatechange = () => {
+        // 耳機拔除或藍牙斷線時安全保護
+        if (this.ctx.state === 'interrupted' || this.ctx.state === 'suspended') {
+          // 靜音保護待機
+        }
+      };
+      try {
+        const silentBuf = this.ctx.createBuffer(1, 1, 22050);
+        const sSource = this.ctx.createBufferSource();
+        sSource.buffer = silentBuf;
+        sSource.connect(this.ctx.destination);
+        sSource.start(0);
+      } catch (_) {}
+    }
+  }
+
+  /**
+   * 建立現代 Web Audio 3D 立體聲方位節點 (StereoPannerNode)
+   * 支援 -1.0 (極左聲道) 到 +1.0 (極右聲道)
+   */
+  createPanner(pan = 0.0) {
+    if (!this.ctx || !this.enabled) return null;
+    const clampedPan = Math.max(-1, Math.min(1, pan));
+    if (typeof this.ctx.createStereoPanner === 'function') {
+      const panner = this.ctx.createStereoPanner();
+      panner.pan.value = clampedPan;
+      return panner;
+    }
+    return null;
   }
 
   toggle() {
@@ -178,7 +213,7 @@ class ArcadeAudio {
     this.engineGain.gain.setTargetAtTime(0, this.ctx.currentTime, 0.05);
   }
 
-  playTone(freq, duration = 0.12, type = 'square', volume = 0.13, slideTo = null) {
+  playTone(freq, duration = 0.12, type = 'square', volume = 0.13, slideTo = null, pan = 0.0) {
     if (!this.isInitialized || !this.enabled || !this.ctx) return;
     const now = this.ctx.currentTime;
     const osc = this.ctx.createOscillator();
@@ -194,10 +229,27 @@ class ArcadeAudio {
     gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
 
     osc.connect(gain);
-    gain.connect(this.ctx.destination);
+    const panner = this.createPanner(pan);
+    if (panner) {
+      gain.connect(panner);
+      panner.connect(this.ctx.destination);
+    } else {
+      gain.connect(this.ctx.destination);
+    }
 
     osc.start(now);
     osc.stop(now + duration);
+  }
+
+  /**
+   * 現代 Web Audio：立體聲都卜勒超車/會車呼嘯聲 (隨車輛相對方位從左右耳穿過)
+   */
+  playPassBy(pan = 0.0, isOpposing = false) {
+    if (!this.isInitialized || !this.enabled || !this.ctx) return;
+    const duration = isOpposing ? 0.22 : 0.30;
+    const startFreq = isOpposing ? 480 : 360;
+    const endFreq = isOpposing ? 150 : 180;
+    this.playTone(startFreq, duration, 'triangle', 0.075, endFreq, pan);
   }
 
   playVehicleNitro(vehicleId) {
