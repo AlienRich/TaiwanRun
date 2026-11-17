@@ -118,7 +118,7 @@
 
   function renderVehicleGarage() {
     if (!vehicleGridEl) return;
-    vehicleGridEl.innerHTML = '';
+    vehicleGridEl.replaceChildren();
 
     window.VEHICLE_ROSTER.forEach((v, idx) => {
       const card = document.createElement('div');
@@ -198,7 +198,33 @@
     showStageBanner(`🏞️ 終點全景模式：${currentVictoryStage ? currentVictoryStage.spotName : ''}（車佔1/4＋兩旁歡呼）`);
   }
 
+  // 現代 Web API：Screen Wake Lock（手機防休眠常亮鎖定）
+  let wakeLockSentinel = null;
+
+  async function requestScreenWakeLock() {
+    if ('wakeLock' in navigator) {
+      try {
+        if (!wakeLockSentinel) {
+          wakeLockSentinel = await navigator.wakeLock.request('screen');
+          wakeLockSentinel.addEventListener('release', () => {
+            wakeLockSentinel = null;
+          });
+        }
+      } catch (e) {
+        // 部分低電量模式或未授權時安全靜默
+      }
+    }
+  }
+
+  function releaseScreenWakeLock() {
+    if (wakeLockSentinel) {
+      wakeLockSentinel.release().catch(() => {});
+      wakeLockSentinel = null;
+    }
+  }
+
   function startGame() {
+    requestScreenWakeLock();
     window.arcadeAudio.init();
     if (window.routeManager) {
       window.routeManager.resetRoute();
@@ -216,6 +242,7 @@
   }
 
   function openGarage() {
+    releaseScreenWakeLock();
     gameState = 'TITLE';
     window.arcadeAudio.stopEngine();
     hideVictoryUI();
@@ -227,6 +254,7 @@
   }
 
   function endGame() {
+    releaseScreenWakeLock();
     gameState = 'GAMEOVER';
     window.arcadeAudio.stopEngine();
     hideVictoryUI();
@@ -246,6 +274,7 @@
    * 建立並渲染「通關結算：計算分數、卡路里統計、10關景點回顧」
    */
   function populateVictorySettlementUI(finaleStage) {
+    releaseScreenWakeLock();
     const baseScore = Math.floor(score);
     const timeBonus = Math.floor(Math.max(0, timeLeft) * 1500);
     const clearBonus = 50000;
@@ -298,7 +327,7 @@
 
     // 建構 15 關景點回顧畫廊（若透過預覽鍵觸發不足 15 關，自動補齊本趟隨機路線供完整回顧）
     if (scenicReviewGridEl) {
-      scenicReviewGridEl.innerHTML = '';
+      scenicReviewGridEl.replaceChildren();
       const totalStagesCount = (window.routeManager && window.routeManager.totalStages) || 15;
       const rawHistory = (window.routeManager && (window.routeManager.visitedHistory || window.routeManager.visitedIds))
         ? (window.routeManager.visitedHistory || window.routeManager.visitedIds).slice()
@@ -527,7 +556,7 @@
 
   function renderFullRouteMapModal() {
     if (!routeMapContentEl) return;
-    routeMapContentEl.innerHTML = '';
+    routeMapContentEl.replaceChildren();
 
     const tiers = [
       {
@@ -834,6 +863,24 @@
 
     drawArcadeCabinetPostProcess(ctx, logicalWidth, logicalHeight);
   }
+
+  // 現代 Web API：Page Visibility API（切換分頁暫停省電與音訊管理）
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') {
+      if (window.arcadeAudio && window.arcadeAudio.ctx && window.arcadeAudio.ctx.state === 'running') {
+        window.arcadeAudio.ctx.suspend().catch(() => {});
+      }
+      releaseScreenWakeLock();
+    } else if (document.visibilityState === 'visible') {
+      lastTime = performance.now();
+      if (gameState === 'PLAYING') {
+        if (window.arcadeAudio && window.arcadeAudio.ctx && window.arcadeAudio.ctx.state === 'suspended') {
+          window.arcadeAudio.ctx.resume().catch(() => {});
+        }
+        requestScreenWakeLock();
+      }
+    }
+  });
 
   function loop(now) {
     const dt = Math.min(0.05, (now - lastTime) / 1000);
